@@ -2,13 +2,19 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     <title>My Site</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+    
   </head>
 
 
+  
   <body>
+    
     <h1>Welcome to my site</h1>
+    <button id="helloButton">点击我打招呼</button>
+    <script src="static/js/script.js"></script>
     <p>Here's a list of things you can do:</p>
     
     <h2>
@@ -19,17 +25,19 @@
     {# 使用 length 过滤器获取 movies 变量的长度 #}
     <p>{{ movies|length }} Titles</p>
 
-    <ul class="movie-list">
+    <ol class="movie-list">
         
         {% for movie in movies %}  {# 迭代 movies 变量 #}
         <li>{{ movie.title }} - {{ movie.year }}</li>  {# 等同于 movie['title'] #}
         {% endfor %}  {# 使用 endfor 标签结束 for 语句 #}
-    </ul>
+    </ol>
 
     <ul>
       <li><a href="/about">Learn about me</a></li>
       <li><a href="/contact">Contact me</a></li>
     </ul>
     <img alt="Walking Totoro" class="totoro" src="{{ url_for('static', filename='images/totoro.gif') }}">
+    
   </body>
+  
 </html>
