@@ -19,7 +19,6 @@ h1 {
     margin: 0;
     padding: 20px 0;
     color: #000000;
-    text-shadow: 3px 3px 1px #888;
   }
 
 html {
@@ -29,16 +28,14 @@ html {
 
 div {
 max-width: 50%;
+height: 100%;
+float: left;
 border: 2px red solid;
 margin: 0;
 padding: 0;
 border-radius: 30px;
 }
 
-/* 头像 */
-.avatar {
-    width: 40px;
-}
 
 /* 电影列表 */
 .movie-list {
@@ -61,12 +58,6 @@ border-radius: 30px;
     background-color: #f8f9fa;
 }
 
-/* 龙猫图片 */
-.totoro {
-    display: block;
-    margin: 0 auto;
-    height: 100px;
-}
 
 .container {
     width: 80%;
