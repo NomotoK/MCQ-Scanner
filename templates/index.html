@@ -1,26 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>My Site</title>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
-  </head>
+</head>
 
 
-  
-  <body>
 
-    
+<body>
+    <main class="main-home">
 
-    <div class="container">
-        <h1>Welcome to MCQ Scanner</h1>
-        <input type="file" id="pdf-upload" accept="application/pdf" />
-        <button onclick="previewPDF()">Upload and Preview</button>
-        <iframe id="pdf-preview" style="width:100%; height:500px;" hidden></iframe>
-    </div>
+        <div class="grid">
 
-    <script src="static/js/script.js"></script>
-  </body>
-  
+            <div class="container-left">
+                <div class="container">
+                    <h1>Hello</h1>
+                </div>
+
+            </div>
+
+            <div class="container-right">
+                <div class="container">
+
+                    <h1>Welcome to MCQ Scanner</h1>
+                    <input type="file" id="pdf-upload" accept="application/pdf" />
+                    <button onclick="previewPDF()">Upload and Preview</button>
+                    <iframe id="pdf-preview" style="width:100%; height:500px;" hidden></iframe>
+                </div>
+
+            </div>
+
+        </div>
+
+        <script src="static/js/script.js"></script>
+    </main>
+</body>
+
+
+
 </html>
