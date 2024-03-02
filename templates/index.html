@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>My Site</title>
+    <title>MCQ Scanner</title>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
 </head>
@@ -16,22 +16,50 @@
         <div class="grid">
 
             <div class="container-left">
-                <div class="container">
-                    <h1>Hello</h1>
+
+                <div class="clipboard-logo">
+                    <img src="{{url_for('static', filename='images/clipboard.png')}}" width="20%" height="auto" alt="clipboard" />
+                </div>
+
+                <div class="container-heading">
+                    <h1>Scan And Analyse MCQ Answer</h1>
+                    <h1>Sheets in One Place</h1>
+                </div>
+
+                <div class="container-subheading">
+                    <p><pre>MCQ Scanner - The Free Optical Answer Sheet Scanner</pre></p>
+                </div>
+
+                <div class="container-featureTitle">
+                    <h2>❤️ Features</h2>
+                </div>
+
+                <div class="container-featureList">
+                    <p><pre>- Upload PDF      - Scan MCQ Answer Sheets      - Get Results</pre></p>
                 </div>
 
             </div>
   
             <div class="container-right">
-                <div class="container">
 
-                    <h1>Welcome to MCQ Scanner</h1>
-                    <input type="file" id="pdf-upload" accept="application/pdf" />
+                <div class="container-upload">
+
+                    <h1>Upload Files</h1>
+
+                    <input type="file" id="pdf-upload" accept="application/pdf"/>
                     <button onclick="previewPDF()">Upload and Preview</button>
-                    <iframe id="pdf-preview" style="width:100%; height:500px;" hidden></iframe>
+                    <iframe id="pdf-preview" style="width:90%; height:500px; border-radius: 15px; border: 2px solid #1971c2;"></iframe>
                 </div>
 
+                <div class="container-scan">
+
+                    <h2>Analyse MCQ Answer Sheets</h2>
+
+                    <button onclick="scanAnswer()" style="width: 130px; height: 30px;">Analyse</button>
+
             </div>
+
+
 
         </div>
 
