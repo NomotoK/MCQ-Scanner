@@ -44,7 +44,7 @@ def crop(rotated, contours, h, w):
 
 
     # 裁剪出矩形区域
-    # rotated = rotated[min(y1, y2):max(y1, y2), min(x1, x2):max(x1, x2)]
+    rotated = rotated[min(y1, y2):max(y1, y2), min(x1, x2):max(x1, x2)]
 
     return rotated
 
