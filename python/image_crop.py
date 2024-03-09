@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import os
 
 
 def edge_detect(image):
@@ -27,7 +28,7 @@ def find_contours(image):
 
 
 # 裁剪图像
-def crop(rotated, contours, h, w):
+def crop_answer_area(rotated, contours, h, w):
         # 矩形四角坐标
     contours = find_contours(rotated)
     c = max(contours, key=cv2.contourArea)
@@ -78,17 +79,30 @@ def deskew(image):
     rotated = cv2.warpAffine(image, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE) # 旋转图像
 
     # 裁剪图像
-    rotated = crop(rotated, contours, h, w)
+    rotated = crop_answer_area(rotated, contours, h, w)
 
 
     return rotated
 
 
 
+def read_images(folder_path):
+    images = []
+    for filename in os.listdir(folder_path):
+        filepath = os.path.join(folder_path, filename)
+        if os.path.isfile(filepath) and filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+            img = cv2.imread(filepath)
+            if img is not None:
+                images.append(img)
+            else:
+                print(f"Failed to read image: {filepath}")
+    return images
+
+
 
 
 if __name__ == '__main__':
-    # Read the image
+    # Read the image 
     image = cv2.imread('images/blank.jpg')    # 缩小图像大小
     scale_percent = 40 # percent of original size
     width = int(image.shape[1] * scale_percent / 100)

@@ -19,7 +19,7 @@ def crop_box(input_image_path, start_x, start_y, box_width, box_height):
 
 if __name__ == '__main__':
     # 示例用法
-    input_image_path = "images/deskewed.jpg"  # 输入图片路径
+    input_image_path = "pdf/deskewed.jpg"  # 输入图片路径
     start_x = 15  # 起始横坐标
     start_y = 30  # 起始纵坐标
     box_width = 150  # 截图窗口宽度
