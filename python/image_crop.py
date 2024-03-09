@@ -89,8 +89,8 @@ def deskew(image):
 
 if __name__ == '__main__':
     # Read the image
-    image = cv2.imread('python/mcq_omr_test.jpg')    # 缩小图像大小
-    scale_percent = 50 # percent of original size
+    image = cv2.imread('images/blank.jpg')    # 缩小图像大小
+    scale_percent = 40 # percent of original size
     width = int(image.shape[1] * scale_percent / 100)
     height = int(image.shape[0] * scale_percent / 100)
     dim = (width, height)
@@ -100,8 +100,8 @@ if __name__ == '__main__':
     # Deskew the image
     deskewed = deskew(image)
 
-    # 裁剪图像
+    #存储图像
+    cv2.imwrite('pdf/deskewed.jpg', deskewed)
 
-
-    cv2.imshow('Deskewed', deskewed)
-    cv2.waitKey(0)
+    # cv2.imshow('Deskewed', deskewed)
+    # cv2.waitKey(0)

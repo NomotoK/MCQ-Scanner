@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # read image
-img = cv2.imread('mcq_omr_test.jpg')
+img = cv2.imread('python/mcq_omr_test.jpg')
 h, w = img.shape[:2]
 
 # trim 15 from bottom to remove partial answer
