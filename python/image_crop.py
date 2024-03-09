@@ -102,6 +102,4 @@ if __name__ == '__main__':
 
     #存储图像
     cv2.imwrite('pdf/deskewed.jpg', deskewed)
-
-    # cv2.imshow('Deskewed', deskewed)
-    # cv2.waitKey(0)
+    
