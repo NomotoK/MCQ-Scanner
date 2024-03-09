@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 from PIL import Image
+import os
+import glob
 
 def edge_detect(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
