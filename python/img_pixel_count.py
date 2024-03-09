@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 # Load the image
-image_path = 'images/deskewed.jpg'
+image_path = 'images/cropped_images/deskewed_0001.jpg'
 image = Image.open(image_path)
 
 # Since the questions seem to be laid out in a grid, we'll try to detect the grid pattern.

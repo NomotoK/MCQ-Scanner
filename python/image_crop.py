@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import os
 
 
 def edge_detect(image):
@@ -28,7 +27,7 @@ def find_contours(image):
 
 
 # 裁剪图像
-def crop_answer_area(rotated, contours, h, w):
+def crop(rotated, contours, h, w):
         # 矩形四角坐标
     contours = find_contours(rotated)
     c = max(contours, key=cv2.contourArea)
@@ -44,7 +43,7 @@ def crop_answer_area(rotated, contours, h, w):
         x2, y2 = w - x2, h - y2
 
 
-    # 裁剪出矩形区域
+    # 裁剪出矩形答题区域
     rotated = rotated[min(y1, y2):max(y1, y2), min(x1, x2):max(x1, x2)]
 
     return rotated
@@ -58,7 +57,7 @@ def deskew(image):
     contours = find_contours(image)
 
     # 画出轮廓
-    cv2.drawContours(image, contours, -1, (0, 255, 0), 3)
+    # cv2.drawContours(image, contours, -1, (0, 255, 0), 3)
 
     # 找到最大的轮廓
     c = max(contours, key=cv2.contourArea)
@@ -79,32 +78,34 @@ def deskew(image):
     rotated = cv2.warpAffine(image, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE) # 旋转图像
 
     # 裁剪图像
-    rotated = crop_answer_area(rotated, contours, h, w)
+    rotated = crop(rotated, contours, h, w)
+
+        # 将学号区域转换为灰度图像，并应用二值化
+    gray = cv2.cvtColor(rotated, cv2.COLOR_BGR2GRAY)
+    _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+
+    # 轮廓检测
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    # 最小轮廓面积
+    min_area = 20
+    contours = [c for c in contours if cv2.contourArea(c) > min_area]
+
+
+    # 画出轮廓
+    cv2.drawContours(rotated, contours, -1, (0, 255, 0), 3)
 
 
     return rotated
 
 
 
-def read_images(folder_path):
-    images = []
-    for filename in os.listdir(folder_path):
-        filepath = os.path.join(folder_path, filename)
-        if os.path.isfile(filepath) and filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-            img = cv2.imread(filepath)
-            if img is not None:
-                images.append(img)
-            else:
-                print(f"Failed to read image: {filepath}")
-    return images
-
-
 
 
 if __name__ == '__main__':
-    # Read the image 
+    # Read the image
     image = cv2.imread('images/blank.jpg')    # 缩小图像大小
-    scale_percent = 40 # percent of original size
+    scale_percent = 50 # percent of original size
     width = int(image.shape[1] * scale_percent / 100)
     height = int(image.shape[0] * scale_percent / 100)
     dim = (width, height)
@@ -114,6 +115,8 @@ if __name__ == '__main__':
     # Deskew the image
     deskewed = deskew(image)
 
-    #存储图像
-    cv2.imwrite('pdf/deskewed.jpg', deskewed)
-    
+    # 裁剪图像
+
+
+    cv2.imshow('Deskewed', deskewed)
+    cv2.waitKey(0)

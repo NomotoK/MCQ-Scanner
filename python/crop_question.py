@@ -19,10 +19,10 @@ def crop_box(input_image_path, start_x, start_y, box_width, box_height):
 
 if __name__ == '__main__':
     # 示例用法
-    input_image_path = "pdf/deskewed.jpg"  # 输入图片路径
-    start_x = 15  # 起始横坐标
-    start_y = 30  # 起始纵坐标
-    box_width = 150  # 截图窗口宽度
+    input_image_path = "images/cropped_images/deskewed_0011.jpg"  # 输入图片路径
+    start_x = 40  # 起始横坐标
+    start_y = 40  # 起始纵坐标
+    box_width = 130  # 截图窗口宽度
     box_height = 24  # 截图窗口高度
 
     for i in range(1, 121):
@@ -31,8 +31,8 @@ if __name__ == '__main__':
             if i % 30 == 0:
                 cropped_image = crop_box(input_image_path, start_x, start_y, box_width, box_height)
                 cropped_image.save(f"images/cropped_questions/cropped_image_{i}.jpg")
-                start_y = 30
-                start_x += box_width + 87
+                start_y = 40
+                start_x += box_width + 110
             else:
                 cropped_image = crop_box(input_image_path, start_x, start_y, box_width, box_height)
                 cropped_image.save(f"images/cropped_questions/cropped_image_{i}.jpg")
