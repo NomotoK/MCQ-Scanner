@@ -3,7 +3,8 @@ import numpy as np
 from PIL import Image
 import os
 import glob
-import pdf_conversion
+import fitz
+
 
 def edge_detect(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -98,45 +99,57 @@ def crop_loop(num_questions, image_pil, output_folder):
 
 
 
+def convert_pdf_to_images(pdf_path, dpi=300):
+    doc = fitz.open(pdf_path)  # Open the PDF file
+    images = []
+    for page_num in range(len(doc)):
+        page = doc.load_page(page_num)  # Load the current page
+        pix = page.get_pixmap(dpi=dpi)  # Render page to an image
+        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+        images.append(img)
+    return images
 
-def load_and_scale_images(input_path, scale_percent):
+
+
+
+
+def load_and_scale_images(images, scale_percent):
     scaled_images = []
-    image_paths = glob.glob(os.path.join(input_path, '*.jpg')) + glob.glob(os.path.join(input_path, '*.png'))
-    for file_path in image_paths:
-        image = cv2.imread(file_path)
-        if image is None:
-            continue
-        width = int(image.shape[1] * scale_percent / 100)
-        height = int(image.shape[0] * scale_percent / 100)
-        dim = (width, height)
-        scaled_image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
-        # 获取不包含路径和扩展名的文件名
-        file_name = os.path.splitext(os.path.basename(file_path))[0]
-        scaled_images.append((scaled_image, file_name))
+    for image_pil in images:
+        width, height = image_pil.size
+        new_width = int(width * scale_percent / 100)
+        new_height = int(height * scale_percent / 100)
+        # 使用Image.Resampling.LANCZOS替代Image.ANTIALIAS
+        image_pil = image_pil.resize((new_width, new_height), Image.Resampling.LANCZOS)
+        image_cv = cv2.cvtColor(np.array(image_pil), cv2.COLOR_RGB2BGR)
+        scaled_images.append(image_cv)
     return scaled_images
 
 
 
 
-
 def main():
-    input_path = 'images/pdf_converted'
-    output_path = 'images/cropped_answers'
-    scale_percent = 40
-    num_questions = 120
+    pdf_path = 'pdf/validation.pdf'  # PDF文件路径
+    output_path = 'images/cropped_answers'  # 输出路径
+    scale_percent = 40  # 缩放比例
+    num_questions = 120  # 问题数量
 
-    scaled_images_with_names = load_and_scale_images(input_path, scale_percent)
-    for image, file_name in scaled_images_with_names:
+    # 使用修改后的函数处理PDF并获取图像列表
+    pil_images = convert_pdf_to_images(pdf_path)
+    scaled_images_with_names = load_and_scale_images(pil_images, scale_percent)
+    
+    for i, image in enumerate(scaled_images_with_names):
         deskewed_image = deskew(image)
         deskewed_image_pil = Image.fromarray(cv2.cvtColor(deskewed_image, cv2.COLOR_BGR2RGB))
         
         # 使用文件名创建对应的子文件夹
+        file_name = f"page_{i+1}"
         output_folder = os.path.join(output_path, f"{file_name}_cropped")
         os.makedirs(output_folder, exist_ok=True)
         
         crop_loop(num_questions, deskewed_image_pil, output_folder)
         # 如果需要保存deskewed_image，可以在这里进行保存
-        # 例如: cv2.imwrite(os.path.join(output_folder, f'{file_name}_deskewed.jpg'), cv2.cvtColor(deskewed_image_pil, cv2.COLOR_RGB2BGR))
+        # 例如: cv2.imwrite(os.path.join(output_folder, f'{file_name}_deskewed.jpg'), deskewed_image)
 
 if __name__ == '__main__':
     main()
