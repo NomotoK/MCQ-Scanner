@@ -3,7 +3,6 @@ import numpy as np
 from PIL import Image
 import os
 import glob
-import fitz
 
 
 def edge_detect(image):
@@ -14,14 +13,10 @@ def edge_detect(image):
 
 
 
-
-
 def find_contours(image):
     edged = edge_detect(image)
     contours, _ = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     return contours
-
-
 
 
 
@@ -67,13 +62,11 @@ def deskew(image):
 
 
 
-
 def crop_box(image_pil, start_x, start_y, box_width, box_height):
     end_x = start_x + box_width
     end_y = start_y + box_height
     cropped_image = image_pil.crop((start_x, start_y, end_x, end_y))
     return cropped_image
-
 
 
 
