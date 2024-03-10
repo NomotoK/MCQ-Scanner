@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 import os
 import glob
+import pdf_conversion
 
 def edge_detect(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -76,13 +77,14 @@ def crop_box(image_pil, start_x, start_y, box_width, box_height):
 
 
 
-def crop_loop(num_questions, image_pil):
+def crop_loop(num_questions, image_pil, output_folder):
     start_x, start_y = 40, 40
     box_width, box_height = 130, 24
     gap_x, gap_y = 110, 35  # Additional gaps for specific conditions
+    os.makedirs(output_folder, exist_ok=True)
     for i in range(1, num_questions + 1):
         cropped_image = crop_box(image_pil, start_x, start_y, box_width, box_height)
-        cropped_image.save(f"images/cropped_questions/{i}.jpg")
+        cropped_image.save(os.path.join(output_folder, f"{i}.jpg"))
         
         # Update coordinates for the next question's position
         if i % 30 == 0:
@@ -97,27 +99,45 @@ def crop_loop(num_questions, image_pil):
 
 
 
-def load_and_scale_image(file_path, scale_percent):
-    image = cv2.imread(file_path)
-    if image is None:
-        raise FileNotFoundError(f"No image found at the specified path: {file_path}")
-    width = int(image.shape[1] * scale_percent / 100)
-    height = int(image.shape[0] * scale_percent / 100)
-    dim = (width, height)
-    scaled_image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
-    return scaled_image
+def load_and_scale_images(input_path, scale_percent):
+    scaled_images = []
+    image_paths = glob.glob(os.path.join(input_path, '*.jpg')) + glob.glob(os.path.join(input_path, '*.png'))
+    for file_path in image_paths:
+        image = cv2.imread(file_path)
+        if image is None:
+            continue
+        width = int(image.shape[1] * scale_percent / 100)
+        height = int(image.shape[0] * scale_percent / 100)
+        dim = (width, height)
+        scaled_image = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
+        # 获取不包含路径和扩展名的文件名
+        file_name = os.path.splitext(os.path.basename(file_path))[0]
+        scaled_images.append((scaled_image, file_name))
+    return scaled_images
 
 
 
 
 
-if __name__ == '__main__':
-    input_path = 'images/pdf_converted/0001.jpg'
+def main():
+    input_path = 'images/pdf_converted'
+    output_path = 'images/cropped_answers'
     scale_percent = 40
     num_questions = 120
 
-    image = load_and_scale_image(input_path, scale_percent)
-    deskewed_image = deskew(image)
-    # 将OpenCV图像转换为PIL图像，以便使用crop_loop
-    deskewed_image_pil = Image.fromarray(cv2.cvtColor(deskewed_image, cv2.COLOR_BGR2RGB))
-    crop_loop(num_questions, deskewed_image_pil)
+    scaled_images_with_names = load_and_scale_images(input_path, scale_percent)
+    for image, file_name in scaled_images_with_names:
+        deskewed_image = deskew(image)
+        deskewed_image_pil = Image.fromarray(cv2.cvtColor(deskewed_image, cv2.COLOR_BGR2RGB))
+        
+        # 使用文件名创建对应的子文件夹
+        output_folder = os.path.join(output_path, f"{file_name}_cropped")
+        os.makedirs(output_folder, exist_ok=True)
+        
+        crop_loop(num_questions, deskewed_image_pil, output_folder)
+        # 如果需要保存deskewed_image，可以在这里进行保存
+        # 例如: cv2.imwrite(os.path.join(output_folder, f'{file_name}_deskewed.jpg'), cv2.cvtColor(deskewed_image_pil, cv2.COLOR_RGB2BGR))
+
+if __name__ == '__main__':
+    main()
+
