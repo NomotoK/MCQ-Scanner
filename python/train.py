@@ -16,8 +16,8 @@ def load_data():
         transforms.ToTensor(),
     ])
 
-    train_data = datasets.ImageFolder(root='train', transform=transform)
-    test_data = datasets.ImageFolder(root='test', transform=transform)
+    train_data = datasets.ImageFolder(root='data/train', transform=transform)
+    test_data = datasets.ImageFolder(root='data/test', transform=transform)
 
     train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
     test_loader = DataLoader(test_data, batch_size=64, shuffle=False)
@@ -62,12 +62,22 @@ def test(model, device, test_loader):
 
 # 5. 主函数
 def main():
+    num_epochs = 10
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    train_loader, test_loader = load_data()
+    
     model = models.get_model().to(device)
     optimizer = optim.Adam(model.parameters(), lr=0.001)
-    train_loader, test_loader = load_data()
+    
     global criterion
     criterion = nn.CrossEntropyLoss()
-    for epoch in range(1, 11):
+
+
+    for epoch in range(num_epochs):
         train(model, device, train_loader, optimizer, epoch)
         test(model, device, test_loader)
+
+    # torch.save(model.state_dict(), "cnn.pt")
+        
+if __name__ == '__main__':
+    main()
