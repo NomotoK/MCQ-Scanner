@@ -1,6 +1,6 @@
 import fitz  # Import PyMuPDF
 
-def convert_pdf_to_jpg(pdf_path, output_folder='JPGs', dpi=300):
+def convert_pdf_to_jpg(pdf_path, output_folder='images/pdf_converted', dpi=300):
     doc = fitz.open(pdf_path)  # Open the PDF file
     for page_num in range(len(doc)):
         page = doc.load_page(page_num)  # Load the current page
@@ -9,5 +9,5 @@ def convert_pdf_to_jpg(pdf_path, output_folder='JPGs', dpi=300):
         pix.save(output_path)  # Save the image as a JPG
 
 # Example usage
-pdf_path = 'colour-300dpi.pdf'
+pdf_path = 'pdf/test.pdf'
 convert_pdf_to_jpg(pdf_path)

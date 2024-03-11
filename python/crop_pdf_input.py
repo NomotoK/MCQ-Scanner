@@ -129,7 +129,7 @@ def load_and_scale_images(images, scale_percent):
 
 
 def main():
-    pdf_path = 'pdf/blank.pdf'  # PDF文件路径
+    pdf_path = 'pdf/test.pdf'  # PDF文件路径
     output_path = 'images/cropped_answers'  # 输出路径
     scale_percent = 40  # 缩放比例
     num_questions = 120  # 问题数量

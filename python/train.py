@@ -64,10 +64,11 @@ def test(model, device, test_loader):
 def main():
     num_epochs = 10
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(device)
     train_loader, test_loader = load_data()
     
     model = models.get_model().to(device)
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=0.0005)
     
     global criterion
     criterion = nn.CrossEntropyLoss()
@@ -77,7 +78,7 @@ def main():
         train(model, device, train_loader, optimizer, epoch)
         test(model, device, test_loader)
 
-    # torch.save(model.state_dict(), "cnn.pt")
+    torch.save(model.state_dict(), "python/models/cnn.pt")
         
 if __name__ == '__main__':
     main()
