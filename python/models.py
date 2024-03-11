@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 
 
@@ -29,7 +30,6 @@ class CNN(nn.Module):
         output = nn.LogSoftmax(dim=1)(x)
         return output
     
-def get_model():
+def get_CNN():
     CNN_model = CNN()
     return CNN_model
-

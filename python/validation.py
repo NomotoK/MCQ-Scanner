@@ -1,10 +1,10 @@
+import os
 import torch
 import torch.nn as nn
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 from PIL import Image
 from models import CNN
-import os
 
 
 
@@ -65,7 +65,7 @@ def main():
     model_path = 'python/models/cnn.pt' 
     inference_folder = 'images/cropped_answers/page_2_cropped'
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Using {device} device")
+    # print(f"Using {device} device")
     
     # 加载模型
     validate(model_path,device,inference_folder) # 模型文件路径

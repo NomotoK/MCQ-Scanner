@@ -1,11 +1,8 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
-import torchvision
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
-import time
 import models
 
 
@@ -67,8 +64,9 @@ def main():
     print(device)
     train_loader, test_loader = load_data()
     
-    model = models.get_model().to(device)
-    optimizer = optim.Adam(model.parameters(), lr=0.0005)
+    # model = models.get_CNN().to(device)
+    model = models.get_ShuffleNet().to(device)
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
     
     global criterion
     criterion = nn.CrossEntropyLoss()
@@ -78,7 +76,10 @@ def main():
         train(model, device, train_loader, optimizer, epoch)
         test(model, device, test_loader)
 
-    torch.save(model.state_dict(), "python/models/cnn.pt")
+    # torch.save(model.state_dict(), "python/models/cnn.pt")
+    torch.save(model.state_dict(), "python/models/shufflenet.pt")
+
+
         
 if __name__ == '__main__':
     main()
