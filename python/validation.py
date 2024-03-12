@@ -7,15 +7,11 @@ from PIL import Image
 from models import CNN
 
 
-
-
 def load_model(model_path):
     model = CNN()
     model.load_state_dict(torch.load(model_path))
     model.eval()  # 切换到评估模式
     return model
-
-
 
 
 
@@ -28,7 +24,6 @@ def predict_image(model, device, image_path, transform):
         output = model(image)
         pred = output.argmax(dim=1, keepdim=True)  # 获取最大概率的索引
     return pred.item()
-
 
 
 

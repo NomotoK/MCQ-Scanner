@@ -13,8 +13,8 @@ def load_data():
         transforms.ToTensor(),
     ])
 
-    train_data = datasets.ImageFolder(root='data/train', transform=transform)
-    test_data = datasets.ImageFolder(root='data/test', transform=transform)
+    train_data = datasets.ImageFolder(root='data/answer_data/train', transform=transform)
+    test_data = datasets.ImageFolder(root='data/answer_data/test', transform=transform)
 
     train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
     test_loader = DataLoader(test_data, batch_size=64, shuffle=False)
