@@ -65,7 +65,6 @@ def main():
     model_path = 'python/models/cnn.pt' 
     inference_folder = 'images/cropped_answers/page_2_cropped'
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    # print(f"Using {device} device")
     
     # 加载模型
     validate(model_path,device,inference_folder) # 模型文件路径
@@ -75,5 +74,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # 需要推理的文件夹路径
     main()

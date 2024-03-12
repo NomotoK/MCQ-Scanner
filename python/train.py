@@ -64,8 +64,7 @@ def main():
     print(device)
     train_loader, test_loader = load_data()
     
-    # model = models.get_CNN().to(device)
-    model = models.get_ShuffleNet().to(device)
+    model = models.get_CNN().to(device)
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     
     global criterion
@@ -76,8 +75,7 @@ def main():
         train(model, device, train_loader, optimizer, epoch)
         test(model, device, test_loader)
 
-    # torch.save(model.state_dict(), "python/models/cnn.pt")
-    torch.save(model.state_dict(), "python/models/shufflenet.pt")
+    torch.save(model.state_dict(), "python/models/cnn.pt")
 
 
         
