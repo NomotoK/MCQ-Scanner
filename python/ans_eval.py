@@ -1,6 +1,6 @@
 import pandas as pd
 import torch
-from validation import validate
+from validation import get_answers,get_id
 
 def load_master_answer(master_answer_path):
     df = pd.read_csv(master_answer_path )
@@ -10,7 +10,9 @@ def load_master_answer(master_answer_path):
 
 def answer_eval(model_path, device, inference_folder, master_answer_path):
 
-    answers = validate(model_path,device, inference_folder)
+    answers = get_answers(model_path,device, inference_folder)
+    id = get_id(model_path,device, inference_folder)
+
     master_answer = load_master_answer(master_answer_path)
     #compare answers with master_answer
     correct = 0
@@ -19,7 +21,7 @@ def answer_eval(model_path, device, inference_folder, master_answer_path):
             correct += 1
     print(f"Correct: {correct}/{len(answers)} ({correct/len(answers)*100:.2f}%)")
     return correct/len(answers)*100
-    return answers
+    return answers,id
 
 
 

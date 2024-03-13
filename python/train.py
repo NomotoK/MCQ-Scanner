@@ -75,7 +75,7 @@ def main():
         train(model, device, train_loader, optimizer, epoch)
         test(model, device, test_loader)
 
-    torch.save(model.state_dict(), "python/models/cnn.pt")
+    torch.save(model.state_dict(), "python/models/cnn_id.pt")
 
 
         

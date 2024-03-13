@@ -4,14 +4,17 @@ import torch.nn as nn
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 from PIL import Image
-from models import CNN
+from models import CNN, CNN_id
 
 
-def load_model(model_path):
-    model = CNN()
-    model.load_state_dict(torch.load(model_path))
-    model.eval()  # 切换到评估模式
-    return model
+def load_model(model_ans_path, model_id_path):
+    model_ans = CNN()
+    model_id = CNN_id()
+    model_ans.load_state_dict(torch.load(model_ans_path))
+    model_id.load_state_dict(torch.load(model_id_path))
+    model_ans.eval()  # 切换到评估模式
+    model_id.eval()  # 切换到评估模式
+    return model_ans
 
 
 
@@ -27,8 +30,7 @@ def predict_image(model, device, image_path, transform):
 
 
 
-
-def validate(model_path,device, inference_folder):  
+def get_answers(model_path,device, inference_folder):  
     model = load_model(model_path)
     model.to(device)
     
@@ -53,16 +55,41 @@ def validate(model_path,device, inference_folder):
     return answers
 
 
+def get_id(model_path,device, inference_folder):
+    model = load_model(model_path)
+    model.to(device)
+    
+    # 设置数据加载器
+    transform = transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),
+        transforms.Resize((24, 183)),
+        transforms.ToTensor(),
+    ])
 
+    filenames = sorted(os.listdir(inference_folder))
+    filenames = sorted(filenames, key=lambda x: int(os.path.splitext(x)[0]))
+    id = []    
+
+    for filename in filenames:
+        image_path = os.path.join(inference_folder, filename)
+        prediction = predict_image(model, device, image_path, transform)
+        answer_name = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+        id.append(answer_name[prediction])
+        print(f"{image_path} -> Prediction: {answer_name[prediction]}")  # 打印预测结果
+    return id
 
 
 def main():
-    model_path = 'python/models/cnn.pt' 
-    inference_folder = 'images/cropped_answers/page_2_cropped'
+    ans_model_path = 'python/models/cnn.pt' 
+    id_model_path = 'python/models/cnn_id.pt'
+    ans_inference_folder = 'images/cropped_answers/page_2_cropped'
+    id_inference_folder = 'images/cropped_id/page_2_cropped'
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     # 加载模型
-    validate(model_path,device,inference_folder) # 模型文件路径
+    get_answers(ans_model_path,device,ans_inference_folder) # 模型文件路径
+    get_id(id_model_path,device,id_inference_folder) # 模型文件路径
 
 
 
