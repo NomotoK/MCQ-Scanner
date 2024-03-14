@@ -138,11 +138,12 @@ def load_and_scale_images(images, scale_percent):
 
 
 def main():
-    pdf_path = 'pdf/test.pdf'  # PDF文件路径
+    pdf_path = 'pdf/id_train_0.pdf'  # PDF文件路径
     output_path = 'images/cropped_answers'  # 输出路径
     output_path_id = 'images/cropped_id'
     scale_percent = 40  # 缩放比例
     num_questions = 120  # 问题数量
+
 
     # 使用修改后的函数处理PDF并获取图像列表
     pil_images = convert_pdf_to_images(pdf_path)
