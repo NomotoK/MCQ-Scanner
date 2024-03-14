@@ -35,7 +35,7 @@ def crop(rotated, contours, h, w):
         x2, y2 = w - x2, h - y2
 
     rotated_ans = rotated[min(y1, y2):max(y1, y2), min(x1, x2):max(x1, x2)]
-    rotated_id = rotated[int(0.47*min(y1, y2)): int(0.93*min(y1, y2)),int(0.76*max(x1, x2)):int(0.99*max(x1, x2))]
+    rotated_id = rotated[int(0.48*min(y1, y2)): int(0.93*min(y1, y2)),int(0.76*max(x1, x2)):int(0.99*max(x1, x2))]
     return rotated_ans, rotated_id
 
 
@@ -76,7 +76,8 @@ def crop_box(image_pil, start_x, start_y, box_width, box_height):
 def crop_id(image_id, output_folder):
     num_id = 9
     start_x,start_y = 0,0
-    box_width,box_height = 24, 183
+    box_width= image_id.size[0]//num_id
+    box_height =image_id.size[1]
     os.makedirs(output_folder, exist_ok=True)
     for i in range(1, num_id + 1):
         cropped_id = crop_box(image_id, start_x, start_y, box_width, box_height)
@@ -138,7 +139,7 @@ def load_and_scale_images(images, scale_percent):
 
 
 def main():
-    pdf_path = 'pdf/id_train_0.pdf'  # PDF文件路径
+    pdf_path = 'pdf/id_test.pdf'  # PDF文件路径
     output_path = 'images/cropped_answers'  # 输出路径
     output_path_id = 'images/cropped_id'
     scale_percent = 40  # 缩放比例
@@ -151,19 +152,20 @@ def main():
     
     for i, image in enumerate(scaled_images_with_names):
         deskewed_ans,deskewed_id = deskew(image)
-        deskewed_ans = Image.fromarray(cv2.cvtColor(deskewed_ans, cv2.COLOR_BGR2RGB))
+        # deskewed_ans = Image.fromarray(cv2.cvtColor(deskewed_ans, cv2.COLOR_BGR2RGB))
         deskewed_id = Image.fromarray(cv2.cvtColor(deskewed_id, cv2.COLOR_BGR2RGB))
 
         
         # 使用文件名创建对应的子文件夹
         file_name = f"page_{i+1}"
-        output_folder = os.path.join(output_path, f"{file_name}_cropped")
+        # output_folder = os.path.join(output_path, f"{file_name}_cropped")
         output_folder_id = os.path.join(output_path_id, f"{file_name}_id")
-        os.makedirs(output_folder, exist_ok=True)
+        # os.makedirs(output_folder, exist_ok=True)
         os.makedirs(output_folder_id, exist_ok=True)
         
-        crop_loop(num_questions, deskewed_ans, output_folder)
+        # crop_loop(num_questions, deskewed_ans, output_folder)
         crop_id(deskewed_id, output_folder_id)
+
         # 如果需要保存deskewed_image，可以在这里进行保存
         # 例如: cv2.imwrite(os.path.join(output_folder, f'{file_name}_deskewed.jpg'), deskewed_image)
 

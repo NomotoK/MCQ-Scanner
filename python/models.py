@@ -36,14 +36,14 @@ def get_CNN():
 
 
 
-class CNN_id(nn.Module,):
+class CNN_ID(nn.Module,):
     def __init__(self):
-        super(CNN_id, self).__init__()
+        super(CNN_ID, self).__init__()
         self.conv1 = nn.Conv2d(1, 32, kernel_size=3, padding=1)
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.dropout1 = nn.Dropout(0.25)
         self.dropout2 = nn.Dropout(0.5)
-        self.fc1 = nn.Linear(64 * 32 * 6, 128)
+        self.fc1 = nn.Linear(64 * 46 * 6, 128)
         self.fc2 = nn.Linear(128, 10)
 
     def forward(self, x):
@@ -63,5 +63,5 @@ class CNN_id(nn.Module,):
         return output
 
 def get_CNN_id():
-    CNN_id_model = CNN_id()
+    CNN_id_model = CNN_ID()
     return CNN_id_model

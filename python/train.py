@@ -9,12 +9,13 @@ import models
 def load_data():
     transform = transforms.Compose([
         transforms.Grayscale(num_output_channels=1),
-        transforms.Resize((130, 24)),# modify here to train id model
+        # transforms.Resize((130, 24)),# modify here to train id model
+        transforms.Resize((24, 186)),
         transforms.ToTensor(),
     ])
 
-    train_data = datasets.ImageFolder(root='data/answer_data/train', transform=transform)
-    test_data = datasets.ImageFolder(root='data/answer_data/test', transform=transform)# modify here to train id model
+    train_data = datasets.ImageFolder(root='data/id_data/train', transform=transform)
+    test_data = datasets.ImageFolder(root='data/id_data/test', transform=transform)# modify here to train id model
 
     train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
     test_loader = DataLoader(test_data, batch_size=64, shuffle=False)
@@ -59,13 +60,14 @@ def test(model, device, test_loader):
 
 # 5. 主函数
 def main():
-    num_epochs = 10
+    num_epochs = 20
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(device)
     train_loader, test_loader = load_data()
     
-    model = models.get_CNN().to(device)
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    # model = models.get_CNN().to(device)
+    model = models.get_CNN_id().to(device)
+    optimizer = optim.Adam(model.parameters(), lr=0.0005)
     
     global criterion
     criterion = nn.CrossEntropyLoss()

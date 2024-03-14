@@ -47,7 +47,7 @@ def crop(rotated, contours, h, w):
     # rotated = rotated[min(y1, y2):max(y1, y2), min(x1, x2):max(x1, x2)]
         
     # 裁剪出学号区域
-    rotated = rotated[int(0.47*min(y1, y2)): int(0.93*min(y1, y2)),int(0.76*max(x1, x2)):int(0.99*max(x1, x2))]
+    rotated = rotated[int(0.41*min(y1, y2)): int(0.93*min(y1, y2)),int(0.76*max(x1, x2)):int(0.99*max(x1, x2))]
 
     return rotated
 
@@ -92,7 +92,7 @@ def deskew(image):
 
 if __name__ == '__main__':
     # Read the image
-    image = cv2.imread('images/blank.jpg')    # 缩小图像大小
+    image = cv2.imread('images/pdf_converted/page_10.jpg')    # 缩小图像大小
     scale_percent = 40 # percent of original size
     width = int(image.shape[1] * scale_percent / 100)
     height = int(image.shape[0] * scale_percent / 100)
