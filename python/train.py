@@ -9,12 +9,12 @@ import models
 def load_data():
     transform = transforms.Compose([
         transforms.Grayscale(num_output_channels=1),
-        transforms.Resize((130, 24)),
+        transforms.Resize((130, 24)),# modify here to train id model
         transforms.ToTensor(),
     ])
 
     train_data = datasets.ImageFolder(root='data/answer_data/train', transform=transform)
-    test_data = datasets.ImageFolder(root='data/answer_data/test', transform=transform)
+    test_data = datasets.ImageFolder(root='data/answer_data/test', transform=transform)# modify here to train id model
 
     train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
     test_loader = DataLoader(test_data, batch_size=64, shuffle=False)

@@ -1,8 +1,6 @@
 import os
 import torch
-import torch.nn as nn
-from torchvision import datasets, transforms
-from torch.utils.data import DataLoader
+from torchvision import transforms
 from PIL import Image
 from models import CNN, CNN_id
 
@@ -73,10 +71,10 @@ def get_id(model_path,device, inference_folder):
     for filename in filenames:
         image_path = os.path.join(inference_folder, filename)
         prediction = predict_image(model, device, image_path, transform)
-        answer_name = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        id_name = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-        id.append(answer_name[prediction])
-        print(f"{image_path} -> Prediction: {answer_name[prediction]}")  # 打印预测结果
+        id.append(id_name[prediction])
+        print(f"{image_path} -> Prediction: {id_name[prediction]}")  # 打印预测结果
     return id
 
 
