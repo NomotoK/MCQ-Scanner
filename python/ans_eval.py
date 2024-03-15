@@ -24,7 +24,9 @@ def answer_eval(ans_model_path, id_model_path, device, ans_inference_folder, id_
     acc = correct/len(answers)*100
     return answers,id,acc
 
-
+def write_to_csv(answers,id,acc):
+    df = pd.DataFrame({'ID': [id],  'Accuracy': [acc], 'Answer': [answers]})
+    df.to_csv('csv/eval.csv', index=False)
 
 def main():
     ans_model_path = 'python/models/cnn.pt'
