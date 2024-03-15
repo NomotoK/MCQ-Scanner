@@ -29,7 +29,7 @@ class CNN(nn.Module):
         x = self.fc2(x)
         output = nn.LogSoftmax(dim=1)(x)
         return output
-    
+
 def get_CNN():
     CNN_model = CNN()
     return CNN_model

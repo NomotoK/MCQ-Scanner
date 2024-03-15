@@ -45,7 +45,7 @@ def get_answers(model_path,device, inference_folder, model=CNN()):
         answer_name = ['A', 'B', 'C', 'D', 'E']
 
         answers.append(answer_name[prediction])
-        print(f"{image_path} -> Prediction: {answer_name[prediction]}")  # 打印预测结果
+        # print(f"{image_path} -> Prediction: {answer_name[prediction]}")  # 打印预测结果
     return answers
 
 
@@ -71,7 +71,7 @@ def get_id(model_path,device, inference_folder, model=CNN_ID()):
 
         id.append(id_name[prediction])
         # print(f"{image_path} -> Prediction: {id_name[prediction]}")  # 打印预测结果
-    print (id)
+    # print (id)
     return id
 
 
@@ -83,7 +83,7 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     # 加载模型
-    # get_answers(ans_model_path,device,ans_inference_folder) # 模型文件路径
+    get_answers(ans_model_path,device,ans_inference_folder) # 模型文件路径
     get_id(id_model_path,device,id_inference_folder) # 模型文件路径
 
 

@@ -60,7 +60,7 @@ def test(model, device, test_loader):
 
 # 5. 主函数
 def main():
-    num_epochs = 20
+    num_epochs = 50
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(device)
     train_loader, test_loader = load_data()
