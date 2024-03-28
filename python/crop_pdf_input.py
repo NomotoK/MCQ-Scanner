@@ -169,7 +169,6 @@ def main():
         # 如果需要保存deskewed_image，可以在这里进行保存
         # 例如: cv2.imwrite(os.path.join(output_folder, f'{file_name}_deskewed.jpg'), deskewed_image)
 
-
 if __name__ == '__main__':
     main()
 
