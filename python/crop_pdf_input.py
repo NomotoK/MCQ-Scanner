@@ -158,8 +158,8 @@ def main():
         
         # 使用文件名创建对应的子文件夹
         file_name = f"page_{i+1}"
-        output_folder = os.path.join(output_path, f"{file_name}_cropped")
-        output_folder_id = os.path.join(output_path_id, f"{file_name}_id")
+        output_folder = os.path.join(output_path, f"{file_name}")
+        output_folder_id = os.path.join(output_path_id, f"{file_name}")
         os.makedirs(output_folder, exist_ok=True)
         os.makedirs(output_folder_id, exist_ok=True)
         
