@@ -91,7 +91,7 @@ def crop_id(image_id, output_folder):
 def crop_loop(num_questions, image_pil, output_folder):
     start_x, start_y = 40, 40
     box_width, box_height = 130, 24
-    gap_x, gap_y = 110, 35  # Additional gaps for specific conditions
+    gap_x, gap_y = 108, 35  # Additional gaps for specific conditions
     os.makedirs(output_folder, exist_ok=True)
     for i in range(1, num_questions + 1):
         cropped_image = crop_box(image_pil, start_x, start_y, box_width, box_height)
@@ -139,7 +139,7 @@ def load_and_scale_images(images, scale_percent):
 
 
 def main():
-    pdf_path = 'pdf/test.pdf'  # PDF文件路径
+    pdf_path = 'pdf/sample_answer.pdf'  # PDF文件路径
     output_path = 'images/cropped_answers'  # 输出路径
     output_path_id = 'images/cropped_id'
     scale_percent = 40  # 缩放比例
