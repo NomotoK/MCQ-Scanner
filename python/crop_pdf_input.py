@@ -89,9 +89,9 @@ def crop_id(image_id, output_folder):
 
 
 def crop_loop(num_questions, image_pil, output_folder):
-    start_x, start_y = 40, 40
-    box_width, box_height = 130, 24
-    gap_x, gap_y = 108, 35  # Additional gaps for specific conditions
+    start_x, start_y = 42, 40
+    box_width, box_height = 125, 24
+    gap_x, gap_y = 113, 35  # Additional gaps for specific conditions
     os.makedirs(output_folder, exist_ok=True)
     for i in range(1, num_questions + 1):
         cropped_image = crop_box(image_pil, start_x, start_y, box_width, box_height)
