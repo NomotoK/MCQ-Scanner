@@ -4,9 +4,14 @@ import os
 from collections import defaultdict
 from validation import get_answers, get_id
 
+
+
 def load_master_answer(master_answer_path):
     df = pd.read_csv(master_answer_path)
     return df
+
+
+
 
 def calculate_part_correct_and_total(answers, master_df):
     part_correct = defaultdict(int)  # Default to 0 for each part for correct answers
@@ -19,6 +24,9 @@ def calculate_part_correct_and_total(answers, master_df):
                 part_correct[part] += 1  # Increment correct answer count for the part
     return part_correct, part_total
 
+
+
+
 def format_answers(answers, master_df):
     formatted_answers = []
     for i, ans in enumerate(answers):
@@ -26,6 +34,9 @@ def format_answers(answers, master_df):
             master_ans = master_df.iloc[i]['Answer']
             formatted_answers.append(ans.upper() if ans == master_ans else ans.lower())
     return ''.join(formatted_answers)
+
+
+
 
 def answer_eval(ans_model_path, id_model_path, device, ans_inference_base_folder, id_inference_base_folder, master_answer_path):
     results = []
@@ -84,6 +95,9 @@ def answer_eval(ans_model_path, id_model_path, device, ans_inference_base_folder
 
 
 
+
+
+
 def export_results_to_csv(results, output_path):
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -91,6 +105,9 @@ def export_results_to_csv(results, output_path):
     df = pd.DataFrame(results)
     df.to_csv(csv_file_path, index=False)
     print(f"Results exported to {csv_file_path}")
+
+
+
 
 def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
