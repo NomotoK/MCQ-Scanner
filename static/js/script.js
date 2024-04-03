@@ -1,27 +1,136 @@
+function uploadAndPreviewPDF() {
+    const fileInput = document.getElementById('pdf-upload');
+    const pdfPreview = document.getElementById('pdf-preview');
 
-function previewPDF() {
-  const fileInput = document.getElementById('pdf-upload');
-  const pdfPreview = document.getElementById('pdf-preview');
+    if (fileInput.files.length === 0) {
+        alert("Please select a PDF file to upload.");
+        return;
+    }
 
-  if (fileInput.files.length === 0) {
-      alert("Please select a PDF file to upload.");
-      return;
-  }
+    const file = fileInput.files[0];
+    if (file.type !== "application/pdf") {
+        alert("Please select a PDF file.");
+        return;
+    }
 
-  const file = fileInput.files[0];
-  if(file.type !== "application/pdf") {
-      alert("Please select a PDF file.");
-      return;
-  }
+    // 使用 FileReader 预览 PDF 文件
+    const fileReader = new FileReader();
+    fileReader.onload = function() {
+        pdfPreview.src = fileReader.result;
+        pdfPreview.style.display = 'block';
+    };
+    fileReader.readAsDataURL(file);
 
-  // Use FileReader to read file
-  const fileReader = new FileReader();
+    // 创建 FormData 对象并添加文件
+    const formData = new FormData();
+    formData.append('file', file);
 
-  fileReader.onload = function() {
-      pdfPreview.src = fileReader.result;
-      pdfPreview.hidden = false;
-  };
-
-  fileReader.readAsDataURL(file);
+    // 异步发送文件到服务器
+    fetch('/upload', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (response.ok) {
+            // 这里可以添加额外的代码来处理服务器的响应
+            alert('File uploaded successfully');
+        } else {
+            throw new Error('File upload failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
+
+
+
+
+
+
+function uploadFile() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert("No file selected.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('/upload_csv', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('CSV uploaded successfully');
+        } else {
+            throw new Error('CSV upload failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error uploading file');
+    });
+}
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dragArea = document.getElementById('drag-area');
+
+    // 当文件被拖拽到区域上方时
+    dragArea.addEventListener('dragover', function(event) {
+        event.preventDefault();  // 阻止默认行为
+        this.classList.add('drag-over');  // 添加背景变深的效果
+    });
+
+    // 当文件离开拖拽区域时
+    dragArea.addEventListener('dragleave', function(event) {
+        this.classList.remove('drag-over');  // 移除背景变深的效果
+    });
+
+    // 当文件被放置到拖拽区域时
+    dragArea.addEventListener('drop', function(event) {
+        event.preventDefault();  // 阻止默认行为
+        this.classList.remove('drag-over');  // 放置文件后，移除背景变深的效果
+
+        const file = event.dataTransfer.files[0];  // 获取拖拽的文件
+
+        // 检查文件类型
+        if (file.type !== "application/pdf") {
+            alert("Please drop a PDF file.");
+            return;
+        }
+
+        // 使用 FormData 封装文件，以便发送
+        const formData = new FormData();
+        formData.append('file', file);
+
+        // 使用 fetch API 异步发送文件到服务器
+        fetch('/upload', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('File uploaded successfully');
+                // 这里可以添加更多成功上传后的处理逻辑
+            } else {
+                throw new Error('File upload failed');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+
 

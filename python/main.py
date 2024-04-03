@@ -1,5 +1,4 @@
 import crop_pdf_input
-import validation
 import ans_eval
 
 def main():

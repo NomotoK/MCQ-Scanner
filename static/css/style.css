@@ -76,17 +76,17 @@ html {
     padding: auto;
     color: #616161;
 }
-.container-featureTitle{
+.container-scan{
     position: absolute;
     text-align: center;
     margin: auto;
-    top: 68%;
+    top: 70%;
     width: 100%;
     padding: auto;
     color: #1971c2;
 }
 
-.container-featureList{
+/* .container-featureList{
     position: absolute;
     text-align: center;
     font-size: larger;
@@ -95,7 +95,7 @@ html {
     left: 0%;
     padding: auto;
     color: #616161;
-}
+} */
 
 .container-upload{
     position: absolute;
@@ -104,7 +104,18 @@ html {
     padding: auto;
     color: #1971c2;
 }
-.container-scan{
+
+.container-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    width: 100%; /* 容器宽度，可根据需要调整 */
+    height: auto; /* 容器高度，可根据需要调整 */
+    padding: 20px; /* 根据需要添加内边距 */
+}
+
+.container-upload-master{
     position: absolute;
     top: 85%;
     width: 100%;
@@ -113,6 +124,38 @@ html {
 
 }
 
-#pdf-upload {
-    margin: 20px;
+#pdf-preview {
+    position:absolute;
+    top:10%;
+    width: 90%; /* 预览窗口宽度，根据需要调整 */
+    height: 580px; /* 预览窗口高度，根据需要调整 */
+    border-radius: 15px;
+    border: 2px solid #1971c2;
+    display: none; /* 默认不显示，将通过 JS 控制显示 */
 }
+
+.container-drag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.drag-area {
+    position: absolute;
+    top: 20%;
+    border: 2px dashed #1971c2;
+    border-radius: 15px;
+    width: 70%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.drag-area.drag-over {
+    background-color: #538ec2; /* 选择一个深色作为背景 */
+}
+
+

@@ -6,6 +6,7 @@
     <title>MCQ Scanner</title>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+    <script src="static/js/script.js"></script>
 </head>
 
 
@@ -30,32 +31,53 @@
                     <p><pre>MCQ Scanner - The Free Optical Answer Sheet Scanner</pre></p>
                 </div>
 
-                <div class="container-featureTitle">
-                    <h2>❤️ Features</h2>
-                </div>
+                <div class="container-scan">
 
-                <div class="container-featureList">
-                    <p><pre>- Upload PDF      - Scan MCQ Answer Sheets      - Get Results</pre></p>
+                    <h2>Analyse MCQ Answer Sheets</h2>
+
+                    <button onclick="scanAnswer()" style="width: 130px; height: 30px;">Analyse</button>
+                
                 </div>
 
             </div>
   
             <div class="container-right">
 
-                <div class="container-upload">
+                <!-- <div class="container-upload">
 
                     <h1>Upload Files</h1>
 
                     <input type="file" id="pdf-upload" accept="application/pdf"/>
                     <button onclick="previewPDF()">Upload and Preview</button>
                     <iframe id="pdf-preview" style="width:90%; height:550px; border-radius: 15px; border: 2px solid #1971c2;"></iframe>
+                </div> -->
+
+                <div class="container-upload">
+                    <h1>Upload Files</h1>
+                    <input type="file" id="pdf-upload" accept="application/pdf"/>
+                    <button onclick="uploadAndPreviewPDF()">Upload and Preview</button>
+                    
                 </div>
 
-                <div class="container-scan">
+                <div class="container-drag" id="drag-container">
+                    <div class="drag-area" id="drag-area">
+                        <p>Drag & Drop your PDF file here</p>
+                    </div>
+                </div>
+                
+                
+                <div class="container-preview">
+                    <iframe id="pdf-preview" style="display:none;"></iframe>
+                </div>
 
-                    <h2>Analyse MCQ Answer Sheets</h2>
 
-                    <button onclick="scanAnswer()" style="width: 130px; height: 30px;">Analyse</button>
+                <div class="container-upload-master">
+
+                    <h2>Upload Master Answer</h2>
+                    <input type="file" id="fileInput" style="display: none;" accept=".csv" onchange="uploadFile()"/>
+                    <button onclick="document.getElementById('fileInput').click();" style="width: 130px; height: 30px;">Upload</button>
+                
+                </div>
 
             </div>
 
@@ -63,7 +85,7 @@
 
         </div>
 
-        <script src="static/js/script.js"></script>
+        
     </main>
 
     

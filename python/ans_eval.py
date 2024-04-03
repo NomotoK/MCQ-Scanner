@@ -105,5 +105,5 @@ def main():
     results = answer_eval(ans_model_path, id_model_path, device, ans_inference_base_folder, id_inference_base_folder, master_answer_path)
     export_results_to_csv(results, output_path)
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
