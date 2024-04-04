@@ -1,0 +1,128 @@
+{
+    "dataset_name": "Machine-readable answer sheet training dataset",
+    "description": "This dataset is used for training machine-readable answer sheet recognition models, divided into answer dataset and ID dataset.",
+    "sub_datasets": [
+      {
+        "name": "Answer dataset",
+        "description": "Records examples of answers filled by students, categorized into 'A', 'B', 'C', 'D', 'E' five classes.",
+        "train_data_path": "/data/answer_data/train",
+        "test_data_path": "/data/answer_data/test",
+        "class_folders": [
+          {
+            "class": "A",
+            "train_folder_name": "train_A",
+            "test_folder_name": "test_A",
+            "num_train_samples": 1200,
+            "num_test_samples": 240
+          },
+          {
+            "class": "B",
+            "train_folder_name": "train_B",
+            "test_folder_name": "test_B",
+            "num_train_samples": 1200,
+            "num_test_samples": 240
+          },
+          {
+            "class": "C",
+            "train_folder_name": "train_C",
+            "test_folder_name": "test_C",
+            "num_train_samples": 1200,
+            "num_test_samples": 240
+          },
+          {
+            "class": "D",
+            "train_folder_name": "train_D",
+            "test_folder_name": "test_D",
+            "num_train_samples": 1200,
+            "num_test_samples": 240
+          },
+          {
+            "class": "E",
+            "train_folder_name": "train_E",
+            "test_folder_name": "test_E",
+            "num_train_samples": 1200,
+            "num_test_samples": 240
+          }
+        ]
+      },
+      {
+        "name": "ID dataset",
+        "description": "Records examples of student IDs filled, categorized into 0-9 ten classes.",
+        "train_data_path": "/data/id_data/train",
+        "test_data_path": "/data/id_data/test",
+        "class_folders": [
+          {
+            "class": "0",
+            "train_folder_name": "train_0",
+            "test_folder_name": "test_0",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          },
+          {
+            "class": "1",
+            "train_folder_name": "train_1",
+            "test_folder_name": "test_1",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          },
+          {
+            "class": "2",
+            "train_folder_name": "train_2",
+            "test_folder_name": "test_2",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          },
+          {
+            "class": "3",
+            "train_folder_name": "train_3",
+            "test_folder_name": "test_3",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          },
+          {
+            "class": "4",
+            "train_folder_name": "train_4",
+            "test_folder_name": "test_4",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          },
+          {
+            "class": "5",
+            "train_folder_name": "train_5",
+            "test_folder_name": "test_5",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          },
+          {
+            "class": "6",
+            "train_folder_name": "train_6",
+            "test_folder_name": "test_6",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          },
+          {
+            "class": "7",
+            "train_folder_name": "train_7",
+            "test_folder_name": "test_7",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          },
+          {
+            "class": "8",
+            "train_folder_name": "train_8",
+            "test_folder_name": "test_8",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          },
+          {
+            "class": "9",
+            "train_folder_name": "train_9",
+            "test_folder_name": "test_9",
+            "num_train_samples": 81,
+            "num_test_samples": 9
+          }
+        ]
+      }
+    ]
+  }
+  
