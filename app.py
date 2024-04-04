@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, jsonify
+from flask import Flask, request, render_template, redirect, url_for, jsonify, send_from_directory
 import os
 import subprocess
 
@@ -51,17 +51,38 @@ def allowed_file(filename):
 
 
 
+def check_files_exist():
+    pdf_path = os.path.join(os.path.dirname(__file__), 'pdf')
+    csv_path = os.path.join(os.path.dirname(__file__), 'csv', 'master_answers')
+
+    # 检查文件夹中是否有文件
+    if not os.listdir(pdf_path):
+        return False, 'Please upload pdf'
+    if not os.listdir(csv_path):
+        return False, 'Please upload master answer'
+
+    return True, ''
+
 @app.route('/analyse_mcq', methods=['POST'])
 def analyse_mcq():
+    files_exist, message = check_files_exist()
+    if not files_exist:
+        return jsonify({'message': message}), 400
+    
     try:
-        # 确定 main.py 的路径
         main_py_path = os.path.join(os.path.dirname(__file__), 'python', 'main.py')
-        # 使用 subprocess 运行 main.py
         result = subprocess.run(['python', main_py_path], capture_output=True, text=True, check=True)
-        # 可以根据 main.py 的输出或执行结果返回不同的响应
         return jsonify({'message': 'Analysis completed successfully', 'output': result.stdout})
     except subprocess.CalledProcessError as e:
         return jsonify({'message': 'Error during analysis', 'error': str(e)}), 500
+    
+
+@app.route('/download_scores', methods=['GET'])
+def download_scores():
+    directory = os.path.join(os.path.dirname(__file__), 'csv', 'output')
+    return send_from_directory(directory=directory, path='student_scores.csv', as_attachment=True)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

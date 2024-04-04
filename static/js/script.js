@@ -136,12 +136,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function scanAnswer() {
     fetch('/analyse_mcq', { method: 'POST' })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            // 如果响应状态码不是 2xx，抛出错误
+            throw new Error('Files missing or analysis failed');
+        }
+        return response.json();
+    })
     .then(data => {
-        alert(data.message);
+        alert(data.message);  // 显示分析成功消息
+        // 触发下载
+        window.location.href = '/download_scores';
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Error triggering analysis');
+        alert(error.message);  // 弹窗显示错误消息
     });
 }
+
+
+
