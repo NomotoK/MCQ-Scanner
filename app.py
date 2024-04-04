@@ -15,6 +15,8 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def index():
     return render_template('index.html')
 
+
+
 @app.route('/upload_csv', methods=['POST'])
 def upload_csv():
     if 'file' not in request.files:
@@ -63,6 +65,9 @@ def check_files_exist():
 
     return True, ''
 
+
+
+
 @app.route('/analyse_mcq', methods=['POST'])
 def analyse_mcq():
     files_exist, message = check_files_exist()
@@ -76,6 +81,8 @@ def analyse_mcq():
     except subprocess.CalledProcessError as e:
         return jsonify({'message': 'Error during analysis', 'error': str(e)}), 500
     
+
+
 
 @app.route('/download_scores', methods=['GET'])
 def download_scores():

@@ -135,24 +135,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function scanAnswer() {
+    document.getElementById('progressContainer').style.display = 'block';
+    let progress = 0;
+    const progressBar = document.getElementById('progressBar');
+
+    const interval = setInterval(function() {
+        progress += 1; // 快速更新时适当调整每次增加的百分比
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) {
+            clearInterval(interval);
+        }
+    }, 100); // 每0.1秒更新一次
+
     fetch('/analyse_mcq', { method: 'POST' })
     .then(response => {
         if (!response.ok) {
-            // 如果响应状态码不是 2xx，抛出错误
             throw new Error('Files missing or analysis failed');
         }
         return response.json();
     })
     .then(data => {
-        alert(data.message);  // 显示分析成功消息
-        // 触发下载
+        alert(data.message);
         window.location.href = '/download_scores';
+        clearInterval(interval);
+        progressBar.style.width = '100%';
+        setTimeout(function() {
+            document.getElementById('progressContainer').style.display = 'none';
+            progressBar.style.width = '0%';
+        }, 2000);
     })
     .catch(error => {
         console.error('Error:', error);
-        alert(error.message);  // 弹窗显示错误消息
+        alert(error.message);
+        clearInterval(interval);
+        document.getElementById('progressContainer').style.display = 'none';
     });
 }
+
+
 
 
 

@@ -80,7 +80,7 @@ html {
     position: absolute;
     text-align: center;
     margin: auto;
-    top: 70%;
+    top: 60%;
     width: 100%;
     padding: auto;
     color: #1971c2;
@@ -160,4 +160,20 @@ html {
     background-color: #1971c2; /* 选择一个深色作为背景 */
 }
 
+
+#progressContainer {
+    position: absolute;
+    top:75%;
+    left: 25%;
+    width: 50%;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+#progressBar {
+    width: 0%;
+    height: 20px;
+    border-radius: 5px;
+    background-color: #1971c2;
+}
 
