@@ -33,9 +33,6 @@ html {
 }
 
 .container-left{
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     position: relative;
     flex: 1;
     height: 100vh;
