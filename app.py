@@ -1,5 +1,6 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 import os
+import subprocess
 
 app = Flask(__name__)
 
@@ -46,6 +47,21 @@ def upload_file():
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
+
+
+
+
+@app.route('/analyse_mcq', methods=['POST'])
+def analyse_mcq():
+    try:
+        # 确定 main.py 的路径
+        main_py_path = os.path.join(os.path.dirname(__file__), 'python', 'main.py')
+        # 使用 subprocess 运行 main.py
+        result = subprocess.run(['python', main_py_path], capture_output=True, text=True, check=True)
+        # 可以根据 main.py 的输出或执行结果返回不同的响应
+        return jsonify({'message': 'Analysis completed successfully', 'output': result.stdout})
+    except subprocess.CalledProcessError as e:
+        return jsonify({'message': 'Error during analysis', 'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

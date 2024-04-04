@@ -125,9 +125,11 @@ html {
 }
 
 #pdf-preview {
+    left: 50%;
+    transform: translateX(-50%);
     position:absolute;
     top:10%;
-    width: 90%; /* 预览窗口宽度，根据需要调整 */
+    width: 80%; /* 预览窗口宽度，根据需要调整 */
     height: 580px; /* 预览窗口高度，根据需要调整 */
     border-radius: 15px;
     border: 2px solid #1971c2;

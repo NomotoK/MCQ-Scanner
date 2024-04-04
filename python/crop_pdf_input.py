@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 import os
 import fitz
+import glob
 
 
 def edge_detect(image):
@@ -138,37 +139,42 @@ def load_and_scale_images(images, scale_percent):
 
 
 
-def main():
-    pdf_path = 'pdf/sample_answer.pdf'  # PDF文件路径
+
+def main(folder_path):
+    # 搜索指定文件夹中的所有PDF文件
+    pdf_files = glob.glob(os.path.join(folder_path, '*.pdf'))
     output_path = 'images/cropped_answers'  # 输出路径
     output_path_id = 'images/cropped_id'
     scale_percent = 40  # 缩放比例
     num_questions = 120  # 问题数量
 
-
-    # 使用修改后的函数处理PDF并获取图像列表
-    pil_images = convert_pdf_to_images(pdf_path)
-    scaled_images_with_names = load_and_scale_images(pil_images, scale_percent)
-    
-    for i, image in enumerate(scaled_images_with_names):
-        deskewed_ans,deskewed_id = deskew(image)
-        deskewed_ans = Image.fromarray(cv2.cvtColor(deskewed_ans, cv2.COLOR_BGR2RGB))
-        deskewed_id = Image.fromarray(cv2.cvtColor(deskewed_id, cv2.COLOR_BGR2RGB))
-
+    for pdf_path in pdf_files:  # 遍历每个PDF文件
+        file_name = os.path.basename(pdf_path).split('.')[0]  # 从文件路径中提取文件名作为输出文件夹的一部分
         
-        # 使用文件名创建对应的子文件夹
-        file_name = f"page_{i+1}"
-        output_folder = os.path.join(output_path, f"{file_name}")
-        output_folder_id = os.path.join(output_path_id, f"{file_name}")
-        os.makedirs(output_folder, exist_ok=True)
-        os.makedirs(output_folder_id, exist_ok=True)
+        # 使用修改后的函数处理PDF并获取图像列表
+        pil_images = convert_pdf_to_images(pdf_path)
+        scaled_images_with_names = load_and_scale_images(pil_images, scale_percent)
         
-        crop_loop(num_questions, deskewed_ans, output_folder)
-        crop_id(deskewed_id, output_folder_id)
+        for i, image in enumerate(scaled_images_with_names):
+            deskewed_ans,deskewed_id = deskew(image)
+            deskewed_ans = Image.fromarray(cv2.cvtColor(deskewed_ans, cv2.COLOR_BGR2RGB))
+            deskewed_id = Image.fromarray(cv2.cvtColor(deskewed_id, cv2.COLOR_BGR2RGB))
 
-        # 如果需要保存deskewed_image，可以在这里保存
-        # 例如: cv2.imwrite(os.path.join(output_folder, f'{file_name}_deskewed.jpg'), deskewed_image)
+            # 构造基于PDF文件名和页码的输出路径
+            output_folder = os.path.join(output_path, f"page_{i+1}")
+            output_folder_id = os.path.join(output_path_id, f"page_{i+1}")
+            
+            # 创建输出文件夹
+            os.makedirs(output_folder, exist_ok=True)
+            os.makedirs(output_folder_id, exist_ok=True)
+            
+            # 裁剪并保存结果
+            crop_loop(num_questions, deskewed_ans, output_folder)
+            crop_id(deskewed_id, output_folder_id)
+
+            # 如果需要保存deskewed_image，可以在这里保存
+            # 例如: cv2.imwrite(os.path.join(output_folder, f'{file_name}_deskewed.jpg'), deskewed_image)
 
 # if __name__ == '__main__':
-#     main()
-
+#     folder_path = 'pdf'  # 指定要处理的文件夹路径
+#     main(folder_path)
