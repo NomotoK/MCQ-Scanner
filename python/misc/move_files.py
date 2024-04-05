@@ -38,5 +38,5 @@ def move_subfolders_content_to_first_subfolder(folder_path):
     print("All contents have been moved to the first subfolder.")
 
 # 使用示例
-folder_path = "images/cropped_id"  # 替换为实际文件夹路径
+folder_path = "images/cropped_answers"  # 替换为实际文件夹路径
 move_subfolders_content_to_first_subfolder(folder_path)

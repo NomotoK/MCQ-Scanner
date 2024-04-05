@@ -21,6 +21,6 @@ def rename_images(folder_path, start_number):
         print(f"Renamed {file} to {new_name}")
 
 # 使用示例
-folder_path = "images/cropped_id/page_9_id"  # 替换为实际文件夹路径
-start_number = 73  # 从此数字开始重命名
+folder_path = "images/cropped_answers/page_27"  # 替换为实际文件夹路径
+start_number = 121  # 从此数字开始重命名
 rename_images(folder_path, start_number)

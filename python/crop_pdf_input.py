@@ -175,6 +175,6 @@ def main(folder_path):
             # 如果需要保存deskewed_image，可以在这里保存
             # 例如: cv2.imwrite(os.path.join(output_folder, f'{file_name}_deskewed.jpg'), deskewed_image)
 
-# if __name__ == '__main__':
-#     folder_path = 'pdf'  # 指定要处理的文件夹路径
-#     main(folder_path)
+if __name__ == '__main__':
+    folder_path = 'pdf'  # 指定要处理的文件夹路径
+    main(folder_path)
