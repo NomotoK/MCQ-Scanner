@@ -132,7 +132,7 @@ def export_results_to_csv(results, output_path):
 def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     
-    ans_model_path = 'python/models/cnn1.pt'
+    ans_model_path = 'python/models/cnn_enhanced.pt'
     id_model_path = 'python/models/cnn_id.pt'
     ans_inference_base_folder = 'images/cropped_answers'
     id_inference_base_folder = 'images/cropped_id'

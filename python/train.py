@@ -122,7 +122,7 @@ def main():
     print(device)
     train_loader, test_loader = load_data()
     
-    model = models.get_CNN().to(device)
+    model = models.get_resnet().to(device)
     # model = models.get_CNN_id().to(device)
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
     
@@ -145,7 +145,7 @@ def main():
     class_names = ['A', 'B', 'C', 'D', 'E', 'Blank']
     plot_confusion_matrix(targets, preds, classes=class_names)
 
-    torch.save(model.state_dict(), "python/models/cnn1.pt")
+    torch.save(model.state_dict(), "python/models/ResNet.pt")
 
 
         

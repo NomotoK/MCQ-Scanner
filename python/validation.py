@@ -2,7 +2,7 @@ import os
 import torch
 from torchvision import transforms
 from PIL import Image
-from models import CNN, CNN_ID
+import models
 
 
 def load_model(model_path, model):
@@ -24,7 +24,7 @@ def predict_image(model, device, image_path, transform):
 
 
 
-def get_answers(model_path,device, inference_folder, model=CNN()):  
+def get_answers(model_path,device, inference_folder, model=models.get_EnhancedCNN()):  
     model = load_model(model_path,model)
     model.to(device)
     
@@ -49,7 +49,7 @@ def get_answers(model_path,device, inference_folder, model=CNN()):
     return answers
 
 
-def get_id(model_path,device, inference_folder, model=CNN_ID()):
+def get_id(model_path,device, inference_folder, model= models.get_CNN_id()):
     model = load_model(model_path, model)
     model.to(device)
     
@@ -75,20 +75,23 @@ def get_id(model_path,device, inference_folder, model=CNN_ID()):
     return id
 
 
-def main():
-    ans_model_path = 'python/models/cnn.pt' 
-    id_model_path = 'python/models/cnn_id.pt'
-    ans_inference_folder = 'images/cropped_answers/page_2_cropped'
-    id_inference_folder = 'images/cropped_id/page_10_id'
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
+
+# def main():
+#     ans_model_path = 'python/models/cnn.pt' 
+#     id_model_path = 'python/models/cnn_id.pt'
+#     ans_inference_folder = 'images/cropped_answers/page_2_cropped'
+#     id_inference_folder = 'images/cropped_id/page_10_id'
+#     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    # 加载模型
-    get_answers(ans_model_path,device,ans_inference_folder) # 模型文件路径
-    get_id(id_model_path,device,id_inference_folder) # 模型文件路径
+#     # 加载模型
+#     get_answers(ans_model_path,device,ans_inference_folder) # 模型文件路径
+#     get_id(id_model_path,device,id_inference_folder) # 模型文件路径
 
 
 
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
