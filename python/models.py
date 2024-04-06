@@ -11,7 +11,7 @@ class CNN(nn.Module):
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.dropout1 = nn.Dropout(0.25)
         self.dropout2 = nn.Dropout(0.5)
-        self.fc1 = nn.Linear(64 * 32 * 6, 128)
+        self.fc1 = nn.Linear(64 * 31 * 6, 128)
         self.fc2 = nn.Linear(128, 6)
 
     def forward(self, x):

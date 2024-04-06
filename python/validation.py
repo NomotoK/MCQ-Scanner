@@ -31,7 +31,7 @@ def get_answers(model_path,device, inference_folder, model=CNN()):
     # 设置数据加载器
     transform = transforms.Compose([
         transforms.Grayscale(num_output_channels=1),
-        transforms.Resize((130, 24)),
+        transforms.Resize((125, 24)),
         transforms.ToTensor(),
     ])
 
@@ -42,7 +42,7 @@ def get_answers(model_path,device, inference_folder, model=CNN()):
     for filename in filenames:
         image_path = os.path.join(inference_folder, filename)
         prediction = predict_image(model, device, image_path, transform)
-        answer_name = ['A', 'B', 'C', 'D', 'E']
+        answer_name = ['A', 'B', 'C', 'D', 'E','-']
 
         answers.append(answer_name[prediction])
         # print(f"{image_path} -> Prediction: {answer_name[prediction]}")  # 打印预测结果

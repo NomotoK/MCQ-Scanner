@@ -94,7 +94,7 @@ def answer_eval(ans_model_path, id_model_path, device, ans_inference_base_folder
                 result[f"Part_{part}"] = f"{part_correct[part]}/{part_total[part]}"
 
             results.append(result)
-            print(f"Processed: {master_answer_path} | Page: {page_num} | ID: {id} | Correct: {result['Correct']}/{len(answers)} | Grade: {result['Grade']} | Incorrect Answers: {result['Incorrect_Answers']}")
+            print(f"Page: {page_num} | ID: {id} | Correct: {result['Correct']}/{len(answers)} | Grade: {result['Grade']} | Incorrect Answers: {result['Incorrect_Answers']}")
 
             page_num += 1
 
@@ -113,26 +113,26 @@ def export_results_to_csv(results, output_path):
     df.to_csv(csv_file_path, index=False)
     print(f"Results exported to {csv_file_path}")
 
-    def clear_cache():
-        folders = [
-            'images/cropped_answers',
-            'images/cropped_id',
-            'csv/master_answers',
-            'pdf'
-        ]
-        for folder in folders:
-            shutil.rmtree(folder)
-            os.makedirs(folder)
-        print("Cache cleared successfully.")
+    # def clear_cache():
+    #     folders = [
+    #         'images/cropped_answers',
+    #         'images/cropped_id',
+    #         'csv/master_answers',
+    #         'pdf'
+    #     ]
+    #     for folder in folders:
+    #         shutil.rmtree(folder)
+    #         os.makedirs(folder)
+    #     print("Cache cleared successfully.")
 
-    clear_cache()
+    # clear_cache()
 
 
 
 def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     
-    ans_model_path = 'python/models/cnn.pt'
+    ans_model_path = 'python/models/cnn1.pt'
     id_model_path = 'python/models/cnn_id.pt'
     ans_inference_base_folder = 'images/cropped_answers'
     id_inference_base_folder = 'images/cropped_id'

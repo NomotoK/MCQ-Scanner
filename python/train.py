@@ -9,7 +9,7 @@ import models
 def load_data():
     transform = transforms.Compose([
         transforms.Grayscale(num_output_channels=1),
-        transforms.Resize((130, 24)),# modify here to train id model
+        transforms.Resize((125, 24)),# modify here to train id model
         # transforms.Resize((24, 186)),
         transforms.ToTensor(),
     ])
@@ -17,8 +17,8 @@ def load_data():
     train_data = datasets.ImageFolder(root='data/answer_data/train', transform=transform)
     test_data = datasets.ImageFolder(root='data/answer_data/test', transform=transform)# modify here to train id model
 
-    train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
-    test_loader = DataLoader(test_data, batch_size=64, shuffle=False)
+    train_loader = DataLoader(train_data, batch_size=16, shuffle=True)
+    test_loader = DataLoader(test_data, batch_size=16, shuffle=False)
 
     return train_loader, test_loader
 
@@ -77,7 +77,7 @@ def main():
         train(model, device, train_loader, optimizer, epoch)
         test(model, device, test_loader)
 
-    torch.save(model.state_dict(), "python/models/cnn.pt")
+    torch.save(model.state_dict(), "python/models/cnn1.pt")
 
 
         
