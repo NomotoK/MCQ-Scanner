@@ -43,23 +43,77 @@ def train(model, device, train_loader, optimizer, epoch):
         
 
 # 4. 测试模型
+# def test(model, device, test_loader):
+#     model.eval()
+#     test_loss = 0
+#     correct = 0
+#     with torch.no_grad():
+#         for data, target in test_loader:
+#             data, target = data.to(device), target.to(device)
+#             output = model(data)
+#             test_loss += criterion(output, target).item()
+#             pred = output.argmax(dim=1, keepdim=True)
+#             correct += pred.eq(target.view_as(pred)).sum().item()
+
+#     test_loss /= len(test_loader.dataset)
+#     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+#         test_loss, correct, len(test_loader.dataset),
+#         100. * correct / len(test_loader.dataset)))
+    
+
+# 修改后的测试函数，用于收集预测结果和真实标签
 def test(model, device, test_loader):
     model.eval()
     test_loss = 0
     correct = 0
+    all_preds = []
+    all_targets = []
     with torch.no_grad():
         for data, target in test_loader:
             data, target = data.to(device), target.to(device)
             output = model(data)
             test_loss += criterion(output, target).item()
-            pred = output.argmax(dim=1, keepdim=True)
+            pred = output.argmax(dim=1, keepdim=True).squeeze()
             correct += pred.eq(target.view_as(pred)).sum().item()
+            all_preds.extend(pred.tolist())
+            all_targets.extend(target.tolist())
 
     test_loss /= len(test_loader.dataset)
     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
     
+    return all_targets, all_preds
+
+
+# 绘制混淆矩阵的函数
+def plot_confusion_matrix(targets, preds, classes):
+    cm = confusion_matrix(targets, preds)
+    fig, ax = plt.subplots()
+    im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+    ax.figure.colorbar(im, ax=ax)
+    ax.set(xticks=np.arange(cm.shape[1]),
+           yticks=np.arange(cm.shape[0]),
+           xticklabels=classes, yticklabels=classes,
+           title='Confusion Matrix',
+           ylabel='True label',
+           xlabel='Predicted label')
+
+    plt.xticks(rotation=45)
+    plt.yticks(rotation=45)
+
+    fmt = 'd'
+    thresh = cm.max() / 2.
+    for i in range(cm.shape[0]):
+        for j in range(cm.shape[1]):
+            ax.text(j, i, format(cm[i, j], fmt),
+                    ha="center", va="center",
+                    color="white" if cm[i, j] > thresh else "black")
+    fig.tight_layout()
+    plt.show()
+    plt.savefig('images/confusion_matrix.png')
+
+
 
 # 5. 主函数
 def main():
@@ -73,12 +127,23 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
     
     global criterion
-    criterion = nn.CrossEntropyLoss()
+    weights = torch.tensor([1.0, 1.0, 1.0, 1.0, 1.0, 10.0]).to(device)
+    criterion = nn.CrossEntropyLoss(weight=weights)
 
+
+    # for epoch in range(num_epochs):
+    #     train(model, device, train_loader, optimizer, epoch)
+    #     test(model, device, test_loader)
+
+    # torch.save(model.state_dict(), "python/models/cnn1.pt")
 
     for epoch in range(num_epochs):
         train(model, device, train_loader, optimizer, epoch)
-        test(model, device, test_loader)
+        targets, preds = test(model, device, test_loader)
+        
+    # 假设你有一个类名的列表
+    class_names = ['A', 'B', 'C', 'D', 'E', 'Blank']
+    plot_confusion_matrix(targets, preds, classes=class_names)
 
     torch.save(model.state_dict(), "python/models/cnn1.pt")
 
