@@ -1,10 +1,9 @@
-# MCQ-Scnner v0.1.0 Beta
+# MCQ-Scnner
 
 ### This is the first closed beta release of MCQ-Scanner. Hello World!
 
 MCQ-Scanner is a web app that allows you to upload answer sheets and sample answers to your test papers for automatic scoring. The results will be downloaded as a csv file.
 
-<img width="1470" alt="screenshot" src="https://github.com/NomotoK/MCQ-Scanner/assets/99944622/ba152844-bb60-47c9-b3f7-a164df951760">
 
 ### The currently implemented functions are as follows:
 
