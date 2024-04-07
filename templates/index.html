@@ -47,7 +47,7 @@
 
                 <div class="container-upload">
                     <h1>Upload Files</h1>
-                    <input type="file" id="pdf-upload" accept="application/pdf"/>
+                    <input type="file" id="pdf-upload" accept="application/pdf" multiple/>
                     <button onclick="uploadAndPreviewPDF()">Upload and Preview</button>
                     
                 </div>
@@ -67,7 +67,7 @@
                 <div class="container-upload-master">
 
                     <h2>Upload Master Answer</h2>
-                    <input type="file" id="fileInput" style="display: none;" accept=".csv" onchange="uploadFile()"/>
+                    <input type="file" id="fileInput" style="display: none;" accept=".csv" onchange="uploadCSV()"/>
                     <button onclick="document.getElementById('fileInput').click();" style="width: 130px; height: 30px;">Upload</button>
                 
                 </div>

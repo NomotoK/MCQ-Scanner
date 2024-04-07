@@ -34,22 +34,41 @@ def upload_csv():
     
     
 
+# @app.route('/upload', methods=['POST'])
+# def upload_file():
+#     if 'file' not in request.files:
+#         return redirect(request.url)
+#     file = request.files['file']
+#     if file.filename == '':
+#         return 'No selected file'
+#     if file and allowed_file(file.filename):
+#         filename = file.filename
+#         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#         return f'File {filename} uploaded successfully'
+#     return 'File type not allowed'
+
+# def allowed_file(filename):
+#     return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    if 'file' not in request.files:
+    if 'files[]' not in request.files:
         return redirect(request.url)
-    file = request.files['file']
-    if file.filename == '':
+    
+    files = request.files.getlist('files[]')
+    
+    if not files or files[0].filename == '':
         return 'No selected file'
-    if file and allowed_file(file.filename):
-        filename = file.filename
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return f'File {filename} uploaded successfully'
-    return 'File type not allowed'
+    
+    for file in files:
+        if file and allowed_file(file.filename):
+            filename = file.filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    
+    return 'Files uploaded successfully'
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
-
 
 
 

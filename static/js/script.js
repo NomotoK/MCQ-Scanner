@@ -1,29 +1,79 @@
+// function uploadAndPreviewPDF() {
+//     const fileInput = document.getElementById('pdf-upload');
+//     const pdfPreview = document.getElementById('pdf-preview');
+
+//     if (fileInput.files.length === 0) {
+//         alert("Please select a PDF file to upload.");
+//         return;
+//     }
+
+//     const file = fileInput.files[0];
+//     if (file.type !== "application/pdf") {
+//         alert("Please select a PDF file.");
+//         return;
+//     }
+
+//     // 使用 FileReader 预览 PDF 文件
+//     const fileReader = new FileReader();
+//     fileReader.onload = function() {
+//         pdfPreview.src = fileReader.result;
+//         pdfPreview.style.display = 'block';
+//     };
+//     fileReader.readAsDataURL(file);
+
+//     // 创建 FormData 对象并添加文件
+//     const formData = new FormData();
+//     formData.append('file', file);
+
+//     // 异步发送文件到服务器
+//     fetch('/upload', {
+//         method: 'POST',
+//         body: formData,
+//     })
+//     .then(response => {
+//         if (response.ok) {
+//             // 这里可以添加额外的代码来处理服务器的响应
+//             alert('File uploaded successfully');
+//         } else {
+//             throw new Error('File upload failed');
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });
+// }
+
 function uploadAndPreviewPDF() {
     const fileInput = document.getElementById('pdf-upload');
     const pdfPreview = document.getElementById('pdf-preview');
 
     if (fileInput.files.length === 0) {
-        alert("Please select a PDF file to upload.");
+        alert("Please select one or more PDF files to upload.");
         return;
     }
 
-    const file = fileInput.files[0];
-    if (file.type !== "application/pdf") {
-        alert("Please select a PDF file.");
+    // 预览第一个 PDF 文件
+    const firstFile = fileInput.files[0];
+    if (firstFile.type !== "application/pdf") {
+        alert("Only PDF files are allowed.");
         return;
     }
 
-    // 使用 FileReader 预览 PDF 文件
+    // 使用 FileReader 预览第一个 PDF 文件
     const fileReader = new FileReader();
     fileReader.onload = function() {
         pdfPreview.src = fileReader.result;
-        pdfPreview.style.display = 'block';
+        pdfPreview.style.display = 'block'; // 显示预览
     };
-    fileReader.readAsDataURL(file);
+    fileReader.readAsDataURL(firstFile);
 
-    // 创建 FormData 对象并添加文件
+    // 创建 FormData 对象并为每个选中的文件添加条目
     const formData = new FormData();
-    formData.append('file', file);
+    Array.from(fileInput.files).forEach((file, index) => {
+        if(file.type === "application/pdf") {
+            formData.append('files[]', file, file.name);
+        }
+    });
 
     // 异步发送文件到服务器
     fetch('/upload', {
@@ -32,8 +82,7 @@ function uploadAndPreviewPDF() {
     })
     .then(response => {
         if (response.ok) {
-            // 这里可以添加额外的代码来处理服务器的响应
-            alert('File uploaded successfully');
+            alert('Files uploaded successfully');
         } else {
             throw new Error('File upload failed');
         }
@@ -46,9 +95,7 @@ function uploadAndPreviewPDF() {
 
 
 
-
-
-function uploadFile() {
+function uploadCSV() {
     const fileInput = document.getElementById('fileInput');
     const file = fileInput.files[0];
     

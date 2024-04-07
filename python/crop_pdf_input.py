@@ -161,8 +161,8 @@ def main(folder_path):
             deskewed_id = Image.fromarray(cv2.cvtColor(deskewed_id, cv2.COLOR_BGR2RGB))
 
             # 构造基于PDF文件名和页码的输出路径
-            output_folder = os.path.join(output_path, f"page_{i+1}")
-            output_folder_id = os.path.join(output_path_id, f"page_{i+1}")
+            output_folder = os.path.join(output_path, f"{file_name}_page_{i+1}")
+            output_folder_id = os.path.join(output_path_id, f"{file_name}_page_{i+1}")
             
             # 创建输出文件夹
             os.makedirs(output_folder, exist_ok=True)
