@@ -10,7 +10,7 @@ MCQ-Scanner is a web app that allows you to upload answer sheets and sample answ
 - Upload standard answers: standard answers for scoring, currently only supports csv format.
 - One-click analysis: Click "Analyze" to get the scores of each test paper in the PDF file, as well as data such as wrong questions and accuracy. The results will be stored in a csv file.
 
-# MCQ-Scanner v1.3 Beta
+# v1.3 Beta
 
 ## What's New:
 - New results preview page: You can now click the "view results" button after generating the results to preview the results of each analysis, including statistical charts of students' highest scores, lowest scores, average scores and accuracy rates, as well as the five questions with the highest error rates pie chart, and a preview window of the final result csv file.
