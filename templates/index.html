@@ -40,6 +40,14 @@
                     <div id="progressBar"></div>
                 </div>
 
+                <!-- <div class="container-view-results" style="display: none;">
+                    <button id="viewResultsButton" onclick="viewResults()">View Results</button>
+                </div> -->
+
+                <div class="container-view-results" >
+                    <button id="viewResultsButton" onclick="viewResults()">View Results</button>
+                </div>
+
             </div>
   
             <div class="container-right">
@@ -68,7 +76,7 @@
 
                     <h2>Upload Master Answer</h2>
                     <input type="file" id="fileInput" style="display: none;" accept=".csv" onchange="uploadCSV()"/>
-                    <button onclick="document.getElementById('fileInput').click();" style="width: 130px; height: 30px;">Upload</button>
+                    <button onclick="document.getElementById('fileInput').click();">Upload</button>
                 
                 </div>
 

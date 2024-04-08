@@ -11,10 +11,8 @@ body {
 footer {
     color: #f8f9fa;
     margin-top: 15px;
-    /* text-align: center; */
     padding: 10px;
 }
-
 
 html {
     background-color: #e7f5ff;
@@ -174,3 +172,10 @@ html {
     background-color: #1971c2;
 }
 
+.container-view-results {
+    position: absolute;
+    top: 80%;
+    width: 100%;
+    padding: auto;
+    
+}

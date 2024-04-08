@@ -1,48 +1,3 @@
-// function uploadAndPreviewPDF() {
-//     const fileInput = document.getElementById('pdf-upload');
-//     const pdfPreview = document.getElementById('pdf-preview');
-
-//     if (fileInput.files.length === 0) {
-//         alert("Please select a PDF file to upload.");
-//         return;
-//     }
-
-//     const file = fileInput.files[0];
-//     if (file.type !== "application/pdf") {
-//         alert("Please select a PDF file.");
-//         return;
-//     }
-
-//     // 使用 FileReader 预览 PDF 文件
-//     const fileReader = new FileReader();
-//     fileReader.onload = function() {
-//         pdfPreview.src = fileReader.result;
-//         pdfPreview.style.display = 'block';
-//     };
-//     fileReader.readAsDataURL(file);
-
-//     // 创建 FormData 对象并添加文件
-//     const formData = new FormData();
-//     formData.append('file', file);
-
-//     // 异步发送文件到服务器
-//     fetch('/upload', {
-//         method: 'POST',
-//         body: formData,
-//     })
-//     .then(response => {
-//         if (response.ok) {
-//             // 这里可以添加额外的代码来处理服务器的响应
-//             alert('File uploaded successfully');
-//         } else {
-//             throw new Error('File upload failed');
-//         }
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//     });
-// }
-
 function uploadAndPreviewPDF() {
     const fileInput = document.getElementById('pdf-upload');
     const pdfPreview = document.getElementById('pdf-preview');
@@ -181,6 +136,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
 function scanAnswer() {
     document.getElementById('progressContainer').style.display = 'block';
     let progress = 0;
@@ -203,6 +160,7 @@ function scanAnswer() {
     })
     .then(data => {
         alert(data.message);
+        // document.querySelector('.container-view-results').style.display = 'block'; // 显示“view results”按钮
         window.location.href = '/download_scores';
         clearInterval(interval);
         progressBar.style.width = '100%';
@@ -220,6 +178,10 @@ function scanAnswer() {
 }
 
 
+function viewResults() {
+    // 跳转到显示结果的新页面
+    window.location.href = '/results';
+}
 
 
 

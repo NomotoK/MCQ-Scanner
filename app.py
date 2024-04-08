@@ -16,6 +16,11 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/results')
+def results():
+    return render_template('results.html')
+
+
 
 @app.route('/upload_csv', methods=['POST'])
 def upload_csv():
@@ -33,22 +38,6 @@ def upload_csv():
         return 'Invalid file type', 400
     
     
-
-# @app.route('/upload', methods=['POST'])
-# def upload_file():
-#     if 'file' not in request.files:
-#         return redirect(request.url)
-#     file = request.files['file']
-#     if file.filename == '':
-#         return 'No selected file'
-#     if file and allowed_file(file.filename):
-#         filename = file.filename
-#         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#         return f'File {filename} uploaded successfully'
-#     return 'File type not allowed'
-
-# def allowed_file(filename):
-#     return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
