@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, jsonify, send_from_directory
 import os
 import subprocess
+import csv
 
 app = Flask(__name__)
 
@@ -16,9 +17,28 @@ def index():
     return render_template('index.html')
 
 
+# @app.route('/results')
+# def results():
+#     return render_template('results.html')
+
 @app.route('/results')
 def results():
-    return render_template('results.html')
+    try:
+        # 定位 score_visualization.py 脚本的路径
+        visualization_script_path = os.path.join(os.path.dirname(__file__), 'python', 'score_visualization.py')
+        # 使用 subprocess 执行脚本
+        subprocess.run(['python', visualization_script_path], check=True)
+        # 渲染结果页面（假设脚本执行成功后有相关结果可以在页面上显示）
+        csv_file_path = os.path.join(os.path.dirname(__file__), 'csv', 'output', 'student_scores.csv')
+        # 读取CSV文件内容
+        with open(csv_file_path, newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            csv_data = list(reader)  # 将CSV文件内容转换为列表
+
+        return render_template('results.html',csv_data=csv_data)
+    except subprocess.CalledProcessError as e:
+        # 如果脚本执行失败，返回错误信息（或者可以选择渲染一个包含错误信息的页面）
+        return jsonify({'message': 'Error executing visualization script', 'error': str(e)}), 500
 
 
 

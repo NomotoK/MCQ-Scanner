@@ -19,6 +19,29 @@ html {
     background-color: #e7f5ff;
   }
 
+/* 应用于所有 img 标签，使图片适应其容器 */
+img {
+    max-width: 100%;  /* 图片的最大宽度为容器的宽度 */
+    max-height: 100%; /* 图片的最大高度为容器的高度 */
+    height: auto;     /* 高度自动调整以保持宽高比 */
+    display: block;   /* 避免图片下方出现额外空间 */
+    
+}
+
+th, td {
+    border: 1px solid #000000; /* 可选，为表格的单元格添加边框 */
+    padding: 8px; /* 可选，单元格内边距 */
+}
+
+/* 可选：为包含图表的容器设置具体的尺寸 */
+#container-fig1, #container-fig2 {
+    display: flex;
+    justify-content: center;
+    width: 100%; /* 或者设置为其他具体值 */
+    overflow: hidden; /* 防止内容溢出容器 */
+    
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -57,6 +80,14 @@ html {
     color: #1971c2;
 }
 
+#container-student-score-title {
+    position: absolute;
+    top:5%;
+    width: 100%;
+    padding: auto;
+    color: #1971c2
+}
+
 #container-fig1 {
     position: absolute;
     left: 10%;
@@ -67,6 +98,7 @@ html {
     text-align: center;
     background-color: #ffffff;
     border-radius: 5px;
+    border: 1px solid #1971c2;
 }
 
 #container-fig2 {
@@ -79,5 +111,19 @@ html {
     text-align: center;
     background-color: #ffffff;
     border-radius: 5px;
+    border: 1px solid #1971c2;
+}
+
+#container-student-scores {
+    position: absolute;
+    top: 14%;
+    left: 5%;
+    right: 5%;
+    width:90%;
+    max-height: 80%; /* 或者你想要的高度 */
+    overflow: auto; /* 添加滚动条 */
+    background-color: #ffffff;
+    border: 2px solid #1971c2; /* 可选，为容器添加边框 */
+    border-radius: 5px; /* 可选，为容器添加圆角 */
 }
 

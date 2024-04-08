@@ -160,7 +160,7 @@ function scanAnswer() {
     })
     .then(data => {
         alert(data.message);
-        // document.querySelector('.container-view-results').style.display = 'block'; // 显示“view results”按钮
+        document.querySelector('.container-view-results').style.display = 'block'; // 显示“view results”按钮
         window.location.href = '/download_scores';
         clearInterval(interval);
         progressBar.style.width = '100%';

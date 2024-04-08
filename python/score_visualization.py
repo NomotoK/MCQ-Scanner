@@ -21,21 +21,29 @@ def bar_chart(df):
     average_accuracy = df['Accuracy'].mean()
 
     # 使用matplotlib绘制统计数据的图表
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(8, 6))
 
     # 绘制条形图
     categories = ['Max Grade', 'Min Grade', 'Average Grade', 'Average Accuracy']
     values = [max_grade, min_grade, average_grade, average_accuracy * 100]  # 将平均准确率转换为百分比
 
-    ax.bar(categories, values, color=['lightblue', 'salmon', 'lavender', 'gold'])
+    bars = ax.bar(categories, values, color=['lightblue', 'salmon', 'lavender', 'gold'])
 
     # 添加标题和标签
     ax.set_title('Student Grade Statistics')
     ax.set_ylabel('Value')
     ax.set_ylim(0, 110)  # 确保y轴范围能够展示百分比
 
-    # 显示图表
-    plt.show()
+        # 在每个条形图顶部显示数值
+    for bar in bars:
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width() / 2., 1.002*height,
+                '%.2f' % height,
+                ha='center', va='bottom')
+
+    image_path = 'static/images/output/bar_chart.png'
+    plt.savefig(image_path)  # 保存图表为文件
+    return image_path  # 返回图像文件的路径
 
 
 
@@ -63,14 +71,17 @@ def pie_chart(df):
     # 添加标题
     ax.set_title('Top 5 Most Incorrect Answers (Fixed)')
 
-    # 显示图表
-    plt.show()
+    image_path = 'static/images/output/pie_chart.png'
+    plt.savefig(image_path)  # 保存图表为文件
+    return image_path  # 返回图像文件的路径
 
 def main():
     student_scores_path = 'csv/output/student_scores.csv'
     df = load_student_scores(student_scores_path)
-    bar_chart(df)
-    pie_chart(df)
+    bar_chart_path = bar_chart(df)
+    pie_chart_path = pie_chart(df)
+    print(f"Bar chart saved to: {bar_chart_path}")
+    print(f"Pie chart saved to: {pie_chart_path}")
 
 if __name__ == '__main__':
     main()

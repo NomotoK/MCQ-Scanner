@@ -6,7 +6,7 @@
     <title>MCQ Scanner</title>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/results_style.css') }}" type="text/css">
-    <script src="static/js/results_script.js"></script>
+    <script src="static/js/script.js"></script>
 </head>
 
 
@@ -21,32 +21,42 @@
                     <h1>View Results</h1>
                 </div>
 
-                <div id="container-fig1" >
-                    <h3>Fig 1: Total Marks</h2>
+                <div id="container-fig1">
                     
+                    <img src="/static/images/output/bar_chart.png" alt="Bar Chart of Total Marks">
                 </div>
-
-                <div id="container-fig2" >
-                    <h3>Fig 2: Incorrect Answers</h2>
+                
+                <div id="container-fig2">
                     
+                    <img src="/static/images/output/pie_chart.png" alt="Pie Chart of Incorrect Answers">
                 </div>
                 
             </div>
   
             <div class="container-right">
 
+                <div id = "container-student-score-title">
+                    <h1>Student Scores</h1>
+                </div>
+                
 
-
+                <div id="container-student-scores">
+                    <table>
+                        {% for row in csv_data %}
+                            <tr>
+                                {% for cell in row %}
+                                    <td>{{ cell }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
 
             </div>
 
-
-
         </div>
 
-        
     </main>
 
-    
 </body>
 </html>
