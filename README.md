@@ -3,7 +3,6 @@
 
 MCQ-Scanner is a web app that allows you to upload answer sheets and sample answers to your test papers for automatic scoring. The results will be downloaded as a csv file.
 
-
 ### The currently implemented functions are as follows:
 
 - Upload files: Users can upload files in pdf format for analysis
