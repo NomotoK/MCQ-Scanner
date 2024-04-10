@@ -37,6 +37,15 @@ conda install torch,cv2,matplotlib,seaborn,pandas,fitz,numpy,scikit-learn
 ```shell
 flask run
 ```
+or
+```python
+python app.py
+```
+
+### Train your own model
+This project uses a CNN model to identify answers. After testing, the default model's answer recognition accuracy exceeded 99.98%. However, if you wish to train your own model for recognition, this project also provides an interface.You can code your model in models.py and train it in train.py. After the training is completed, the confusion matrix of this training will be printed by default.
+
+![Figure_enhanced](https://github.com/NomotoK/MCQ-Scanner/assets/99944622/cee981bb-dc6e-4e05-98b6-a7e60b0f79b3)
 
 ### File Tree
 
@@ -159,7 +168,17 @@ MCQ-Scanner
    │  ├─ train...
 
 ```
+## Terms and Conditions
+- This project and the built-in data set comes from the customized answer sheets of the University of Liverpool. If you use other types of answer sheets(such as SAT answer sheets), the recognition results may be inaccurate.
+- This dataset does not contain any personal information. All raw data do not come from real exam answer sheets, but are filled in manually by the author(s).
+- Commercial use of this dataset is prohibited. If you use this dataset in your project, please include the copyright notice and this permission statement in the software and in all copies of the software.
 
+
+## Acknoledgement
+I would like to thank Mr. Chenwei Yin, Mr. Zekai Gong, Mr. Zijian Wang and Mr. Tianyao Qiu. Together they helped create this dataset. At the same time, I would also like to thank Mr. Gubin Zhao for providing the code for positioning and cropping images.
+
+
+## Recent Update
 # v1.3 Beta
 
 ## What's New:
