@@ -1,5 +1,4 @@
 # MCQ-Scnner
-[**🇨🇳Chinese**](./README_CN.md) | [**🌐English**](./README.md)
 
 <p align="center">
 <img alt="Static Badge" src="https://img.shields.io/badge/Version-1.3-blue">
