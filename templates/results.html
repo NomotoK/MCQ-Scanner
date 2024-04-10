@@ -52,6 +52,18 @@
                     </table>
                 </div>
 
+                <div id="container-student-info">
+                    <h2>Send Feedback Email</h2>
+                    <input type="file" id="fileInput" accept=".csv" onchange="uploadStudentInfo()"/>
+                    <button onclick="document.getElementById('fileInput').click();">Upload Student Info</button>
+                    
+                </div>
+
+                <div id="container-email">
+                    
+                    <button onclick="sendEmail()">Send Results Via Email</button>
+                </div>
+
             </div>
 
         </div>

@@ -81,6 +81,35 @@ function uploadCSV() {
 
 
 
+function uploadStudentInfo() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+        alert("No file selected.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('/upload_student_info', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('CSV uploaded successfully');
+        } else {
+            throw new Error('CSV upload failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error uploading file');
+    });
+}
+
 
 
 
@@ -182,6 +211,27 @@ function viewResults() {
     // 跳转到显示结果的新页面
     window.location.href = '/results';
 }
+
+
+
+function sendEmail() {
+    fetch('/send_email', { method: 'POST' })
+    .then(response => {
+        if (!response.ok) {
+            // 如果响应状态码不是 2xx，抛出错误
+            throw new Error('Failed to send email');
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert('Email Sent Successfully!');  // 显示成功消息
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error sending email');  // 弹窗显示错误消息
+    });
+}
+
 
 
 

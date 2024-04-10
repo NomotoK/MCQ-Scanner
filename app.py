@@ -116,5 +116,33 @@ def download_scores():
 
 
 
+@app.route('/upload_student_info', methods=['POST'])
+def upload_student_info():
+    if 'file' not in request.files:
+        return 'No file part', 400
+    file = request.files['file']
+    if file.filename == '':
+        return 'No selected file', 400
+    if file and file.filename.endswith('.csv'):
+        base_path = os.path.join('csv', 'student_info')
+        os.makedirs(base_path, exist_ok=True)
+        file.save(os.path.join(base_path, file.filename))
+        return 'File uploaded successfully', 200
+    else:
+        return 'Invalid file type', 400
+
+
+
+@app.route('/send_email', methods=['POST'])
+def send_email():
+    try:
+        # 确定 send_email.py 的路径
+        send_email_path = os.path.join(os.path.dirname(__file__), 'python', 'send_email.py')
+        # 使用 subprocess 运行 send_email.py
+        subprocess.run(['python', send_email_path], check=True)
+        return jsonify({'message': 'Email sent successfully'})
+    except subprocess.CalledProcessError:
+        return jsonify({'message': 'Failed to send email'}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)

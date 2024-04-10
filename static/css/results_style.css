@@ -120,10 +120,26 @@ th, td {
     left: 5%;
     right: 5%;
     width:90%;
-    max-height: 80%; /* 或者你想要的高度 */
+    max-height: 50%; /* 或者你想要的高度 */
     overflow: auto; /* 添加滚动条 */
     background-color: #ffffff;
     border: 2px solid #1971c2; /* 可选，为容器添加边框 */
     border-radius: 5px; /* 可选，为容器添加圆角 */
 }
 
+#container-student-info {
+    position: absolute;
+    top: 70%;
+    width: 100%;
+    padding: auto;
+    color: #1971c2;
+    
+}
+
+#container-email{
+    position: absolute;
+    top: 85%;
+    width: 100%;
+    padding: auto;
+    color: #1971c2;
+}
