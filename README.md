@@ -178,6 +178,23 @@ I would like to thank Mr. Chenwei Yin, Mr. Zekai Gong, Mr. Zijian Wang and Mr. T
 
 
 ## Recent Update
+
+# v1.4 Beta
+
+## What's New:
+- New email feedback sending function: On the results preview page, you can now upload a csv file containing student names, IDs, and email addresses, and the system will automatically send feedback emails to the corresponding students to display their results.
+- This feature is still in the testing phase and requires you to configure the SMTP server yourself in `send_email.py`. This feature will not work without modifying the source code.
+### Preview:
+<img width="734" alt="send_email" src="https://github.com/NomotoK/MCQ-Scanner/assets/99944622/36d0aac4-85c5-46a1-9f97-dc4eb97f7b27">
+<img width="689" alt="email" src="https://github.com/NomotoK/MCQ-Scanner/assets/99944622/2a8f6e05-73ce-4618-b8ef-305ffa6370e3">
+
+
+## Improvements:
+- Optimized the UI layout of the results preview page
+
+## Bug Fixes
+- Fixed the problem that the mail sending function in app.py could not run properly.
+
 # v1.3 Beta
 
 ## What's New:
@@ -191,6 +208,8 @@ I would like to thank Mr. Chenwei Yin, Mr. Zekai Gong, Mr. Zijian Wang and Mr. T
 
 ## Bug Fixes:
 - Fixed some display issues
+
+
 
 
 
