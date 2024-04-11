@@ -6,6 +6,9 @@ import fitz
 import glob
 from PIL import Image
 
+
+
+
 def edge_detect(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -70,6 +73,7 @@ def crop_box(image_pil, start_x, start_y, box_width, box_height):
     end_y = start_y + box_height
     cropped_image = image_pil.crop((start_x, start_y, end_x, end_y))
     return cropped_image
+
 
 
 

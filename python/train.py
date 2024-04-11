@@ -86,6 +86,7 @@ def test(model, device, test_loader):
     return all_targets, all_preds
 
 
+
 # 绘制混淆矩阵的函数
 def plot_confusion_matrix(targets, preds, classes):
     cm = confusion_matrix(targets, preds)
