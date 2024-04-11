@@ -1,10 +1,10 @@
-import cv2
 import numpy as np
-from PIL import Image
+import pandas as pd
+import cv2
 import os
 import fitz
 import glob
-
+from PIL import Image
 
 def edge_detect(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -138,15 +138,30 @@ def load_and_scale_images(images, scale_percent):
 
 
 
+def get_num_questions(master_answer_path):
+    # List all files in the given folder
+    files = [f for f in os.listdir(master_answer_path) if os.path.isfile(os.path.join(master_answer_path, f)) and f.endswith('.csv')]
+    if files:
+        # Assuming there's only one CSV file in the folder
+        csv_file = os.path.join(master_answer_path, files[0])
+        # Read the CSV file using pandas
+        df = pd.read_csv(csv_file)
+        # Return the number of rows, excluding the header
+        return len(df)
+    else:
+        return "No CSV files found in the folder."
+
+
 
 
 def main(folder_path):
     # 搜索指定文件夹中的所有PDF文件
     pdf_files = glob.glob(os.path.join(folder_path, '*.pdf'))
+    master_answer_path = 'csv/master_answers'  # 答案文件夹路径
     output_path = 'images/cropped_answers'  # 输出路径
     output_path_id = 'images/cropped_id'
     scale_percent = 40  # 缩放比例
-    num_questions = 120  # 问题数量
+    num_questions = get_num_questions(master_answer_path)  # 问题数量
 
     for pdf_path in pdf_files:  # 遍历每个PDF文件
         file_name = os.path.basename(pdf_path).split('.')[0]  # 从文件路径中提取文件名作为输出文件夹的一部分

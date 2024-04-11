@@ -39,6 +39,8 @@ def results():
 
 
 
+
+
 @app.route('/upload_csv', methods=['POST'])
 def upload_csv():
     if 'file' not in request.files:
@@ -55,6 +57,8 @@ def upload_csv():
         return 'Invalid file type', 400
     
     
+
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -78,6 +82,8 @@ def allowed_file(filename):
 
 
 
+
+
 def check_files_exist():
     pdf_path = os.path.join(os.path.dirname(__file__), 'pdf')
     csv_path = os.path.join(os.path.dirname(__file__), 'csv', 'master_answers')
@@ -89,6 +95,8 @@ def check_files_exist():
         return False, 'Please upload master answer'
 
     return True, ''
+
+
 
 
 
@@ -106,6 +114,8 @@ def analyse_mcq():
     except subprocess.CalledProcessError as e:
         return jsonify({'message': 'Error during analysis', 'error': str(e)}), 500
     
+
+
 
 
 

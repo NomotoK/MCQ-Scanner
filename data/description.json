@@ -4,7 +4,7 @@
     "sub_datasets": [
       {
         "name": "Answer dataset",
-        "description": "Records examples of answers filled by students, categorized into 'A', 'B', 'C', 'D', 'E' five classes.",
+        "description": "Records examples of answers filled by students, categorized into 'A', 'B', 'C', 'D', 'E', 'X'six classes.",
         "train_data_path": "/data/answer_data/train",
         "test_data_path": "/data/answer_data/test",
         "class_folders": [
@@ -40,6 +40,13 @@
             "class": "E",
             "train_folder_name": "train_E",
             "test_folder_name": "test_E",
+            "num_train_samples": 1200,
+            "num_test_samples": 240
+          },
+          {
+            "class": "X",
+            "train_folder_name": "train_X",
+            "test_folder_name": "test_X",
             "num_train_samples": 1200,
             "num_test_samples": 240
           }
