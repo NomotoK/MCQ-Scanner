@@ -12,6 +12,8 @@ def load_model(model_path, model):
 
 
 
+
+
 def predict_image(model, device, image_path, transform):
     image = Image.open(image_path)
     image = transform(image).unsqueeze(0)  # 增加一个批处理维度
@@ -21,6 +23,8 @@ def predict_image(model, device, image_path, transform):
         output = model(image)
         pred = output.argmax(dim=1, keepdim=True)  # 获取最大概率的索引
     return pred.item()
+
+
 
 
 
@@ -47,6 +51,9 @@ def get_answers(model_path,device, inference_folder, model=models.get_EnhancedCN
         answers.append(answer_name[prediction])
         # print(f"{image_path} -> Prediction: {answer_name[prediction]}")  # 打印预测结果
     return answers
+
+
+
 
 
 def get_id(model_path,device, inference_folder, model= models.get_CNN_id()):

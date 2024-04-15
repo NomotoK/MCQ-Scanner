@@ -10,7 +10,7 @@ function uploadAndPreviewPDF() {
     // 预览第一个 PDF 文件
     const firstFile = fileInput.files[0];
     if (firstFile.type !== "application/pdf") {
-        alert("Only PDF files are allowed.");
+        alert("Please select a PDF file.");
         return;
     }
 
@@ -31,7 +31,7 @@ function uploadAndPreviewPDF() {
     });
 
     // 异步发送文件到服务器
-    fetch('/upload', {
+    fetch('/upload_pdf', {
         method: 'POST',
         body: formData,
     })
@@ -46,6 +46,49 @@ function uploadAndPreviewPDF() {
         console.error('Error:', error);
     });
 }
+
+
+function uploadAndPreviewMasterPDF() {
+    const fileInput = document.getElementById('master-upload');
+    // const pdfPreview = document.getElementById('master-preview');
+
+    if (fileInput.files.length === 0) {
+        alert("Please select a PDF file to upload.");
+        return;
+    }
+
+    const file = fileInput.files[0];
+    if (file.type !== "application/pdf") {
+        alert("Please select a PDF file.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('/upload_master_pdf', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('PDF uploaded successfully');
+            return response.blob();
+        } else {
+            throw new Error('PDF upload failed');
+        }
+    })
+    // .then(blob => {
+    //     const url = URL.createObjectURL(blob);
+    //     pdfPreview.src = url;
+    //     pdfPreview.style.display = 'block';
+    // })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error uploading file');
+    });
+}
+
 
 
 

@@ -60,7 +60,7 @@ def upload_csv():
 
 
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload_pdf', methods=['POST'])
 def upload_file():
     if 'files[]' not in request.files:
         return redirect(request.url)
@@ -79,6 +79,24 @@ def upload_file():
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'pdf'
+
+
+
+@app.route('/upload_master_pdf', methods=['POST'])
+def upload_pdf():
+    if 'file' not in request.files:
+        return 'No file part', 400
+    file = request.files['file']
+    if file.filename == '':
+        return 'No selected file', 400
+    if file and file.filename.endswith('.pdf'):
+        base_path = os.path.join('pdf')
+        os.makedirs(base_path, exist_ok=True)
+        file.save(os.path.join(base_path, file.filename))
+        return 'File uploaded successfully', 200
+    else:
+        return 'Invalid file type', 400
+
 
 
 

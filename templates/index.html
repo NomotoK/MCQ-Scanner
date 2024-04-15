@@ -44,9 +44,6 @@
                     <button id="viewResultsButton" onclick="viewResults()">View Results</button>
                 </div>
 
-                <!-- <div class="container-view-results" >
-                    <button id="viewResultsButton" onclick="viewResults()">View Results</button>
-                </div> -->
 
             </div>
   
@@ -69,6 +66,7 @@
                 
                 <div class="container-preview">
                     <iframe id="pdf-preview" style="display:none;"></iframe>
+                    <!-- <iframe id="master-preview" style="display:none;"></iframe> -->
                 </div>
 
 
@@ -77,6 +75,10 @@
                     <h2>Upload Master Answer</h2>
                     <input type="file" id="fileInput" style="display: none;" accept=".csv" onchange="uploadCSV()"/>
                     <button onclick="document.getElementById('fileInput').click();">Upload</button>
+
+                    <input type="file" id="master-upload" accept="application/pdf" style="display: none;" onchange="uploadAndPreviewMasterPDF()"/>
+                    <button onclick="document.getElementById('master-upload').click();" >Upload (PDF Format)</button>
+        
                 
                 </div>
 

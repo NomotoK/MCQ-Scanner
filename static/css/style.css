@@ -131,6 +131,18 @@ html {
     display: none; /* 默认不显示，将通过 JS 控制显示 */
 }
 
+#master-preview {
+    left: 50%;
+    transform: translateX(-50%);
+    position:absolute;
+    top:15%;
+    width: 80%; /* 预览窗口宽度，根据需要调整 */
+    height: 500px; /* 预览窗口高度，根据需要调整 */
+    border-radius: 15px;
+    border: 2px solid #1971c2;
+    display: none; /* 默认不显示，将通过 JS 控制显示 */
+}
+
 .container-drag {
     display: flex;
     justify-content: center;
