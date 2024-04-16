@@ -70,19 +70,14 @@ function uploadAndPreviewMasterPDF() {
         method: 'POST',
         body: formData,
     })
-    .then(response => {
-        if (response.ok) {
-            alert('PDF uploaded successfully');
-            return response.blob();
-        } else {
-            throw new Error('PDF upload failed');
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.download_url) {
+            // 触发下载
+            window.location.href = data.download_url;
         }
     })
-    // .then(blob => {
-    //     const url = URL.createObjectURL(blob);
-    //     pdfPreview.src = url;
-    //     pdfPreview.style.display = 'block';
-    // })
     .catch(error => {
         console.error('Error:', error);
         alert('Error uploading file');

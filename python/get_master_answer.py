@@ -1,44 +1,81 @@
 import os
+import pandas as pd
+import torch
+import shutil
 from validation import get_answers
-from ans_eval import clear_cache
-
-import csv
+import crop_pdf_input
 
 
-def export_master_to_csv(filepath):
-    # 确保目录存在，如果不存在就创建
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
+def create_master_answer(path):
+    # 创建一个DataFrame，包含所需的列和行
+    data = {
+        "Number": range(1, 121),  # 生成1到120的数字
+        "Answer": [''] * 120,     # 初始化为空字符串的列表
+        "Weight": [1] * 120,      # 初始化权重为1
+        "Part": [1] * 120         # 初始化部分为1
+    }
     
-    # 获取答案列表
-    answers = get_answers()
+    # 创建DataFrame
+    df = pd.DataFrame(data)
+    # 保存到指定路径的CSV文件
+    df.to_csv(path, index=False)
+
+
+
+
+
+def export_master_to_csv(path, answers):
+    # 读取现有的CSV文件
+    df = pd.read_csv(path)
+    # 更新"Answer"列
+    df['Answer'] = answers
+    # 再次保存到CSV
+    df.to_csv(path, index=False)
+
+
+
+
+
+def process_files_in_subfolder(base_path, master_csv_path, model_path, device):
+    subfolder_path = next(os.walk(base_path))[1][0]  # 获取第一个子文件夹的路径
+    full_subfolder_path = os.path.join(base_path, subfolder_path)
     
-    # 检查文件是否存在，如果不存在则创建并写入头部
-    header_needed = not os.path.exists(filepath)
+    # 从get_answers函数获取答案列表
+    answers = get_answers(model_path, device, full_subfolder_path)
     
-    # 打开文件，准备写入
-    with open(filepath, mode='a', newline='') as file:
-        writer = csv.writer(file)
-        
-        # 如果文件是新创建的，写入CSV的头部
-        if header_needed:
-            writer.writerow(['Number', 'Answer', 'Weight', 'Part'])
-        
-        # 遍历答案列表，写入每个答案的数据
-        for index, answer in enumerate(answers):
-            number = index + 1  # 序号从1开始
-            weight = 1  # 默认权重为1
-            part = 1    # 默认部分为1
-            
-            # 写入一行数据
-            writer.writerow([number, answer, weight, part])
+    # 更新CSV文件的路径
+    csv_file_path = master_csv_path
+    export_master_to_csv(csv_file_path, answers)
+
+
+
+def clear_cache():
+    folders = [
+        'images/cropped_answers',
+        'images/cropped_id',
+        'pdf'
+    ]
+    for folder in folders:
+        shutil.rmtree(folder)
+        os.makedirs(folder)
+    print("Cache cleared successfully.")
+
 
 
 def main():
-    # 导出答案到CSV文件
-    export_master_to_csv('csv/master_answers/master_answers.csv')
+    master_csv_path = 'csv/master_answers/master_answers.csv'
+    base_path = 'images/cropped_answers'
+    ans_model_path = 'python/models/cnn_enhanced.pt' 
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    # 清除缓存
+    # 导出答案到CSV文件
+    create_master_answer(master_csv_path)
+    crop_pdf_input.main('pdf')
+    process_files_in_subfolder(base_path, master_csv_path, ans_model_path, device)
     clear_cache()
+
+
 
 if __name__ == '__main__':
     main()

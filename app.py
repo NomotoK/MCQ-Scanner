@@ -82,20 +82,38 @@ def allowed_file(filename):
 
 
 
+
+
+
 @app.route('/upload_master_pdf', methods=['POST'])
 def upload_pdf():
     if 'file' not in request.files:
-        return 'No file part', 400
+        return jsonify({'message': 'No file part'}), 400
     file = request.files['file']
     if file.filename == '':
-        return 'No selected file', 400
+        return jsonify({'message': 'No selected file'}), 400
     if file and file.filename.endswith('.pdf'):
         base_path = os.path.join('pdf')
         os.makedirs(base_path, exist_ok=True)
-        file.save(os.path.join(base_path, file.filename))
-        return 'File uploaded successfully', 200
+        filepath = os.path.join(base_path, file.filename)
+        file.save(filepath)
+
+        # 执行 get_master_answer.py 脚本
+        try:
+            script_path = os.path.join(os.path.dirname(__file__), 'python', 'get_master_answer.py')
+            subprocess.run(['python', script_path, filepath], check=True)
+            
+            # 提供下载链接
+            return jsonify({'message': 'File uploaded and script executed successfully', 'download_url': '/download_master_answer'})
+        except subprocess.CalledProcessError:
+            return jsonify({'message': 'Script execution failed'}), 500
     else:
-        return 'Invalid file type', 400
+        return jsonify({'message': 'Invalid file type'}), 400
+
+@app.route('/download_master_answer', methods=['GET'])
+def download_master_answer():
+    directory = os.path.join(os.path.dirname(__file__), 'csv', 'master_answers')
+    return send_from_directory(directory, 'master_answers.csv', as_attachment=True)
 
 
 
@@ -141,6 +159,9 @@ def analyse_mcq():
 def download_scores():
     directory = os.path.join(os.path.dirname(__file__), 'csv', 'output')
     return send_from_directory(directory=directory, path='student_scores.csv', as_attachment=True)
+
+
+
 
 
 
