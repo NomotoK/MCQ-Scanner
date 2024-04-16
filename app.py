@@ -110,6 +110,12 @@ def upload_pdf():
     else:
         return jsonify({'message': 'Invalid file type'}), 400
 
+
+
+
+
+
+
 @app.route('/download_master_answer', methods=['GET'])
 def download_master_answer():
     directory = os.path.join(os.path.dirname(__file__), 'csv', 'master_answers')
@@ -179,6 +185,8 @@ def upload_student_info():
         return 'File uploaded successfully', 200
     else:
         return 'Invalid file type', 400
+
+
 
 
 
