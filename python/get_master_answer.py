@@ -54,7 +54,7 @@ def clear_cache():
     folders = [
         'images/cropped_answers',
         'images/cropped_id',
-        'pdf'
+        'pdf_master'
     ]
     for folder in folders:
         shutil.rmtree(folder)
@@ -64,14 +64,14 @@ def clear_cache():
 
 
 def main():
-    master_csv_path = 'csv/master_answers/master_answers.csv'
+    master_csv_path = 'csv/master_answers/master_answer.csv'
     base_path = 'images/cropped_answers'
     ans_model_path = 'python/models/cnn_enhanced.pt' 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     # 导出答案到CSV文件
     create_master_answer(master_csv_path)
-    crop_pdf_input.main('pdf')
+    crop_pdf_input.main('pdf_master')
     process_files_in_subfolder(base_path, master_csv_path, ans_model_path, device)
     clear_cache()
 

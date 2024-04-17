@@ -93,7 +93,7 @@ def upload_pdf():
     if file.filename == '':
         return jsonify({'message': 'No selected file'}), 400
     if file and file.filename.endswith('.pdf'):
-        base_path = os.path.join('pdf')
+        base_path = os.path.join('pdf_master')
         os.makedirs(base_path, exist_ok=True)
         filepath = os.path.join(base_path, file.filename)
         file.save(filepath)
@@ -119,7 +119,7 @@ def upload_pdf():
 @app.route('/download_master_answer', methods=['GET'])
 def download_master_answer():
     directory = os.path.join(os.path.dirname(__file__), 'csv', 'master_answers')
-    return send_from_directory(directory, 'master_answers.csv', as_attachment=True)
+    return send_from_directory(directory, 'master_answer.csv', as_attachment=True)
 
 
 
