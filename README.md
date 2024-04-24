@@ -1,9 +1,5 @@
 # MCQ-Scnner
 
-<p align="center">
-<img alt="Static Badge" src="https://img.shields.io/badge/Version-1.3-blue">
-<img alt="Static Badge" src="https://img.shields.io/badge/Licence-MIT-yellow">
-</p>
 
 ## Introduction
 MCQ-Scanner is a web app that allows you to upload answer sheets and sample answers to your test papers for automatic scoring. The results will be downloaded as a csv file.You can also preview the results of the analysis, including the average score, the highest and lowest scores, and the questions with the highest error rate, etc.
@@ -178,6 +174,24 @@ I would like to thank Mr. Chenwei Yin, Mr. Zekai Gong, Mr. Zijian Wang and Mr. T
 
 
 ## Recent Update
+# v1.5 Beta
+
+## What's New:
+- Master answer template now supports uploading a pre-filled pdf file as the master answer.
+- The backend will automatically process the pdf file and generate a master answer.csv file and download on your computer. You can modify the csv file if there are any mistakes.
+- If you choose not to modify the csv file and re-upload it, **the number of questions will be set to 120 as default, and the weight and part of each question will be set to 1 as default.**
+- Only a single-page file is allowed. if you upload a pdf file with more than one page, only the first page will work as the master answer.
+
+### Preview:
+<img width="302" alt="image" src="https://github.com/NomotoK/MCQ-Scanner/assets/99944622/40bd0fdc-f0d1-4731-b570-10d7960c27b2">
+
+
+## Improvements:
+- Optimized the UI layout of the master answer upload area.
+- Refactored unused files
+
+## Bug Fixes
+- Fixed the problem that master answer could not be processed correctly
 
 # v1.4 Beta
 
